@@ -17,10 +17,10 @@ MAX_TOKENS = 160
 
 PHONE_STYLE_RULES = (
     "\n\nIMPORTANT CALL RULES:\n"
-    "- You are on a live phone call. Keep every response to 1-3 short sentences.\n"
-    "- Never use bullet points, lists, numbering, emojis, or stage directions.\n"
-    "- Speak the way a real person talks out loud, with natural rhythm.\n"
-    "- Only say what you would actually say into the phone -- no narration.\n"
+    "- You are on a phone call. Reply in 1-2 sentences maximum.\n"
+    "- Never use lists or bullet points.\n"
+    "- Use natural speech -- contractions, filler words like 'um' or 'yeah' occasionally.\n"
+    "- Pause naturally between thoughts.\n"
 )
 
 
