@@ -28,6 +28,9 @@ class PatientTTS:
         model_id: str = DEFAULT_MODEL,
     ):
         self.client = ElevenLabs(api_key=api_key or os.environ.get("ELEVENLABS_API_KEY"))
+        # Voice is chosen per call from the scenario's voice_id (male/female).
+        # ELEVENLABS_VOICE_ID in .env is only a fallback default when the
+        # scenario omits voice_id; the final literal is a last-resort default.
         self.voice_id = voice_id or os.environ.get("ELEVENLABS_VOICE_ID", "21m00Tcm4TlvDq8ikWAM")
         self.model_id = model_id
 

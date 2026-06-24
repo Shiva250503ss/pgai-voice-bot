@@ -101,7 +101,9 @@ async def run_call(scenario: dict) -> None:
         scenario=scenario,
         recorder=recorder,
         llm=PatientLLM(system_prompt=scenario["system_prompt"]),
-        tts=PatientTTS(),
+        # Per-scenario voice (male/female). Falls back to ELEVENLABS_VOICE_ID
+        # inside PatientTTS if the scenario omits voice_id.
+        tts=PatientTTS(voice_id=scenario.get("voice_id")),
     )
 
     app = create_app(lambda: session)
