@@ -1,0 +1,22 @@
+# Environment / secrets
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Outputs (generated per call)
+outputs/transcripts/*.txt
+outputs/recordings/*.mp3
+outputs/recordings/*.wav
+outputs/recordings/*.ogg
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.log
