@@ -17,19 +17,19 @@ starts speaking while the patient is talking, Deepgram's interim results trigger
 barge-in: we stop sending frames and send Twilio a `clear` event to flush the
 playback buffer. Twilio's built-in call recording captures both legs; after the
 call ends we download it as an mp3, and the running transcript is written to a
-`.txt` — both keyed by scenario number under `outputs/`.
+`.txt` both keyed by scenario number under `outputs/`.
 
 **Why these choices.** Websocket streaming (not request/response polling) is what
 keeps end-to-end latency low enough to feel like a real phone conversation, and it
 makes natural turn-taking and barge-in possible. Deepgram was chosen for its
 accurate conversational STT and, crucially, its built-in endpointing/utterance
 events, which give reliable end-of-turn detection without us hand-rolling silence
-heuristics — and it accepts Twilio's mulaw directly, removing a transcode step on
+heuristics and it accepts Twilio's mulaw directly, removing a transcode step on
 the inbound path. ElevenLabs provides natural, human-sounding TTS and can emit
 `ulaw_8000` natively, so the outbound path also needs no ffmpeg transcoding,
 reducing latency and Windows dependency pain. Claude Sonnet gives consistent,
 controllable persona behavior so each scenario stays in character and steers
 toward its goal while still reacting naturally. Finally, every persona, goal, and
 "what to watch" lives in `scenarios.json`, so calls are reproducible, easy to run
-one at a time (`python main.py --scenario N`), and simple to extend — the code is
+one at a time (`python main.py --scenario N`), and simple to extend the code is
 generic and the scenario file is the only thing that changes per test.
