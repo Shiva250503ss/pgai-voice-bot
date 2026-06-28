@@ -24,6 +24,9 @@ class PatientTTS:
     def __init__(
         self,
         api_key: str | None = None,
+        # Renamed from `voice` to `voice_id` so the parameter matches both the
+        # caller (main.py passes voice_id=...) and the self.voice_id attribute
+        # below. The previous mismatch raised TypeError on construction.
         voice_id: str | None = None,
         model_id: str = DEFAULT_MODEL,
     ):

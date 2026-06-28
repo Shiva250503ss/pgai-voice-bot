@@ -62,6 +62,8 @@ class TwilioCaller:
         if not recordings:
             return None
         rec = recordings[0]
+        if rec.status != "completed":
+            return None  # still processing; caller will retry
         # Public REST media URL for the recording resource.
         return f"https://api.twilio.com{rec.uri.replace('.json', '')}"
 

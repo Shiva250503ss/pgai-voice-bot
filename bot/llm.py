@@ -21,6 +21,9 @@ PHONE_STYLE_RULES = (
     "- Never use lists or bullet points.\n"
     "- Use natural speech -- contractions, filler words like 'um' or 'yeah' occasionally.\n"
     "- Pause naturally between thoughts.\n"
+    "- CRITICAL: You have reached the correct clinic. No matter what name or specialty the clinic "
+    "announces, NEVER say you called the wrong number, NEVER apologize for a wrong number, and "
+    "NEVER end the call early because of the clinic name. Always stay in character and pursue your goal.\n"
 )
 
 

@@ -1,0 +1,62 @@
+======================================================================
+CALL TRANSCRIPT - Scenario 2: Reschedule existing appointment
+======================================================================
+Started:  2026-06-27 21:28:44
+Ended:    2026-06-27 21:31:14
+Duration: 150.1s
+Turns:    18
+======================================================================
+
+[21:28:56] AGENT (clinic):
+    This call may be recorded for quality and training purposes.
+
+[21:28:58] PATIENT (bot):
+    Hi there, yeah, I was hoping to reschedule an appointment I've got coming up — is that something you can help me with?
+
+[21:29:03] AGENT (clinic):
+    Thank you for calling PivotPoint Orthopedics. Would you like to create a demo patient profile?
+
+[21:29:05] PATIENT (bot):
+    Uh, no thanks, I'm actually an existing patient — I just need to move an appointment if that's possible.
+
+[21:29:06] AGENT (clinic):
+    Need your first and last name to get started.
+
+[21:29:07] PATIENT (bot):
+    Sure, it's James Carter.
+
+[21:29:19] AGENT (clinic):
+    Your patient profile is set up and your date of birth is 07/04/2000 for demo purposes.
+
+[21:29:21] PATIENT (bot):
+    Okay, uh, that's not quite right but that's fine — I just need to reschedule my appointment that's this Thursday at 2:00 PM, if you can help me with that.
+
+[21:29:21] AGENT (clinic):
+    How may I help you today?
+
+[21:29:22] PATIENT (bot):
+    Yeah, I need to move my Thursday 2 PM appointment to sometime on Friday — any time Friday works for me, I'm pretty flexible.
+
+[21:29:47] AGENT (clinic):
+    I see you have an appointment scheduled for Wednesday, July 8 at 9AM. I hope to see a Thursday 2PM appointment on file. Could you double check the date or let me know if you want to move the Wednesday appointment instead?
+
+[21:29:50] PATIENT (bot):
+    Hmm, it should be Thursday at 2 PM — but uh, you know what, if the system's showing Wednesday at 9 AM, maybe that's the one, I'm not a hundred percent sure. Could you just move whichever appointment you have there to Friday instead?
+
+[21:30:23] AGENT (clinic):
+    The next available Friday slot is July 10 at 09:45AM in Nashville with Aperker. Would you like to move your appointment to that time? If not, I also have Friday, July 31 at 9AM or 09:45AM. Let me know which works for you.
+
+[21:30:25] PATIENT (bot):
+    Yeah, July 10th at 9:45 AM works great for me, let's do that one.
+
+[21:30:40] AGENT (clinic):
+    Can you tell me the reason you need to reschedule your appointment? For example, is it a schedule conflict, transportation issue, or something else?
+
+[21:30:43] PATIENT (bot):
+    Yeah, just a schedule conflict — a work meeting got dropped on top of it, so I just need to move it.
+
+[21:31:00] AGENT (clinic):
+    You'd like to move your appointment from Wednesday, July 8 at 9AM to Friday, July 10 at 09:45AM in Nashville with Abrekar. Is that correct?
+
+[21:31:02] PATIENT (bot):
+    Uh, yeah that sounds right — so that's Friday, July 10th at 9:45 AM in Nashville, just want to make sure I've got that correct. Thanks so much for your help, I really appreciate it, take care!

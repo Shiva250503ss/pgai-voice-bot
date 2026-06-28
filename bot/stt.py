@@ -103,8 +103,13 @@ class DeepgramSTT:
             # Interim words -> the agent is currently speaking (barge-in signal).
             await self._on_interim(text)
 
-    async def _handle_utterance_end(self, _client, _result, **_kwargs) -> None:
-        # Silence threshold crossed; flush whatever finals we have.
+    async def _handle_utterance_end(self, _client, *_args, **_kwargs) -> None:
+        # The Deepgram SDK delivers the UtteranceEnd payload as a keyword arg
+        # (named `utterance_end`, NOT `result`), so we must not declare a
+        # required positional `_result` -- doing so raised "missing 1 required
+        # positional argument: '_result'". We accept *_args/**_kwargs and ignore
+        # the payload, since all we need to do is flush the buffered finals when
+        # the silence threshold (utterance_end_ms) is crossed.
         await self._flush()
 
     async def _handle_error(self, _client, error, **_kwargs) -> None:

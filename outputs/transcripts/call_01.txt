@@ -1,0 +1,89 @@
+======================================================================
+CALL TRANSCRIPT - Scenario 1: Simple new patient scheduling
+======================================================================
+Started:  2026-06-27 21:09:42
+Ended:    2026-06-27 21:12:13
+Duration: 151.2s
+Turns:    27
+======================================================================
+
+[21:09:54] AGENT (clinic):
+    This call may be recorded for quality and training purposes.
+
+[21:09:56] PATIENT (bot):
+    Hi there, yeah, I was hoping to, um, set up as a new patient? I just moved to the area a couple weeks ago and I'm looking to get established with a primary care doctor.
+
+[21:09:59] AGENT (clinic):
+    Thank you for calling PivotPoint Orthopedics.
+
+[21:10:02] AGENT (clinic):
+    Hello. How can I help you today?
+
+[21:10:04] PATIENT (bot):
+    Oh hi! Yeah, I'm, um, looking to get set up as a new patient with a primary care doctor -- I just moved to town recently and I need to find a new doctor in the area.
+
+[21:10:19] AGENT (clinic):
+    Welcome to the area.
+
+[21:10:21] PATIENT (bot):
+    Thank you, yeah, it's been a bit of a whirlwind but I'm finally starting to get settled! So, um, are you able to get me scheduled for a new patient appointment?
+
+[21:10:22] AGENT (clinic):
+    Would you like to create a demo location profile now?
+
+[21:10:24] PATIENT (bot):
+    Oh, um, sure, yeah, whatever I need to do to get an appointment scheduled -- what information do you need from me?
+
+[21:10:24] AGENT (clinic):
+    Just need your first and last name to get started.
+
+[21:10:26] PATIENT (bot):
+    Sure, it's Sarah Mitchell.
+
+[21:10:48] AGENT (clinic):
+    Your patient profile is set up and your date of birth is 07/04/2000 for demo purposes. How may I help you today?
+
+[21:10:50] PATIENT (bot):
+    Oh, that's not quite my birthday, but, um, that's okay for demo purposes I guess! So yeah, I'd love to get scheduled for a new patient appointment -- I'm pretty flexible, but I'd prefer a weekday morning if you have anything available?
+
+[21:11:20] AGENT (clinic):
+    There aren't any weekday morning openings available available this coming week. Would you like to look at later dates? Or are you open to seeing any available provider?
+
+[21:11:22] PATIENT (bot):
+    Yeah, totally, let's look at later dates -- like I said, I'm pretty flexible, so whenever you have a weekday morning opening works for me!
+
+[21:11:36] AGENT (clinic):
+    I found openings on Wednesday,
+
+[21:11:37] AGENT (clinic):
+    July 8 with provider
+
+[21:11:38] AGENT (clinic):
+    a bricker.
+
+[21:11:40] PATIENT (bot):
+    Oh perfect, yeah, Wednesday July 8th works great for me! What time in the morning would that be?
+
+[21:11:42] AGENT (clinic):
+    Available times are nine, 09:45, and 10:30 in the morning.
+
+[21:11:43] PATIENT (bot):
+    Um, let's do 9 o'clock -- that works perfectly for me!
+
+[21:11:44] AGENT (clinic):
+    Would you like to book one of these?
+
+[21:11:45] PATIENT (bot):
+    Yes please, let's book the 9 o'clock on July 8th!
+
+[21:11:56] AGENT (clinic):
+    You're scheduled for a new patient appointment on Wednesday, July 8.
+
+[21:11:59] PATIENT (bot):
+    Perfect! So that's Wednesday July 8th at 9am with Dr. Bricker -- I just want to make sure I've got it right. Is there anything I need to bring or do before the appointment?
+
+[21:12:01] AGENT (clinic):
+    At 9AM with doctor Adam Bricker at Pivot Point Orthopaedics.
+
+[21:12:03] PATIENT (bot):
+    Great, so Wednesday July 8th at 9am with Dr. Adam Bricker -- I'll make sure to write that down! Thank you so much for your help, I really appreciate it, have a great day!

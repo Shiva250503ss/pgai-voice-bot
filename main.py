@@ -50,6 +50,8 @@ REQUIRED_ENV = [
 def load_scenario(scenario_id: int) -> dict:
     with open(SCENARIOS_PATH, encoding="utf-8") as fh:
         data = json.load(fh)
+    # The scenarios file stores the list under the "scenarios" key (not
+    # "scenario_list"). Using the correct key avoids a KeyError at load time.
     for scenario in data["scenarios"]:
         if scenario["id"] == scenario_id:
             return scenario
