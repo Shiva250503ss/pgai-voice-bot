@@ -15,7 +15,7 @@ returns a short, phone-appropriate line. The line is synthesized by ElevenLabs
 directly to `ulaw_8000` and streamed back to Twilio in 20 ms frames. If the agent
 starts speaking while the patient is talking, Deepgram's interim results trigger a
 barge-in: we stop sending frames and send Twilio a `clear` event to flush the
-playback buffer. The reverse direction — the patient cutting the agent off
+playback buffer. The reverse direction the patient cutting the agent off
 mid-utterance — is opt-in per scenario via `"barge_in": true` in
 `scenarios.json` (used by the interruption edge case, Scenario 8): when enabled,
 the patient starts its turn off the agent's interim transcript once the agent has
