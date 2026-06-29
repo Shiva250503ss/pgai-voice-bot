@@ -73,12 +73,12 @@ Saved automatically per call, keyed by scenario number:
 | 4  | Medication refill request | Refill Lisinopril, pharmacy + timeline |
 | 5  | Weekend appointment *(edge)* | Should **reject** Saturday 10am, no hallucinated slot |
 | 6  | After-hours scheduling *(edge)* | Should **reject** a 9pm request, state real hours |
-| 7  | Insurance question | Aetna, then Blue Cross, then Cigna — one at a time |
+| 7  | Insurance question | Aetna, then Blue Cross, then Cigna , one at a time |
 | 8  | Barge-in / interruption *(edge)* | Patient cuts agent off; agent should yield gracefully |
 | 9  | Angry / frustrated patient *(edge)* | Agent should de-escalate and still complete the task |
 | 10 | Mumbled multi-part request *(edge)* | Three asks in one breath: refill + appt + directions |
 | 11 | Completely off-topic *(edge)* | Agent should redirect, not follow off-topic / hallucinate |
-| 12 | New-patient info stress test *(edge)* | Wrong DOB first, then corrected — does the record update? |
+| 12 | New-patient info stress test *(edge)* | Wrong DOB first, then corrected does the record update? |
 
 Edge-case scenarios print a **"watch for"** reminder after the call.
 
