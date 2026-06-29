@@ -1,7 +1,7 @@
 # pgai-voice-bot
 
 An outbound **voice bot** for the Pretty Good AI AI Engineering Challenge. It
-phones a clinic line (`+1-805-439-8008`) and plays a realistic **patient** —
+phones a clinic line (`+1-805-439-8008`) and plays a realistic **patient** -
 scheduling, refills, insurance questions, and deliberately tricky edge cases
 to probe how the clinic's AI agent behaves. Audio runs over Twilio Media Streams
 with **Deepgram** for real-time speech-to-text, **Claude Haiku 4.5** for the patient
