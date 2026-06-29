@@ -1,0 +1,137 @@
+======================================================================
+CALL TRANSCRIPT - Scenario 8: Barge-in / interruption test (edge case)
+======================================================================
+Started:  2026-06-28 21:31:53
+Ended:    2026-06-28 21:36:13
+Duration: 260.8s
+Turns:    43
+======================================================================
+
+[21:32:05] AGENT (clinic):
+    This call may be recorded for quality and training purposes.
+
+[21:32:08] AGENT (clinic):
+    Thank you for calling Pivot Point Orthopedics.
+
+[21:32:13] PATIENT (bot):
+    Yeah, yeah, hi—I need to get in for a checkup like, as soon as possible, do you have anything open this week?
+
+[21:32:22] AGENT (clinic):
+    I can help with that. First,
+
+[21:32:23] PATIENT (bot):
+    Okay okay, yeah, just—what dates do you actually have available? Like, can you do tomorrow or—
+
+[21:32:33] AGENT (clinic):
+    I'll check the schedule for you.
+
+[21:32:34] PATIENT (bot):
+    Yeah, yeah, that's great—um, so while you're looking, I'm Alex Turner, by the way. August 25th, '96, and you can reach me back at (833) 725-2475 if you need it.
+
+[21:32:40] AGENT (clinic):
+    What is your first name and last name?
+
+[21:32:41] PATIENT (bot):
+    It's Alex Turner—I just said that, yeah? So what'd you find in the schedule?
+
+[21:32:48] AGENT (clinic):
+    Your patient profile is set up,
+
+[21:32:49] PATIENT (bot):
+    Great, so—wait, do you have anything tomorrow or like early next week? I'm pretty flexible but I really need to get this done soon.
+
+[21:33:06] AGENT (clinic):
+    Thanks, Alex Turner. For your checkup, would this be
+
+[21:33:08] PATIENT (bot):
+    Yeah yeah, it's just a routine checkup, nothing specific—so what times you got open? Can we just pick a slot?
+
+[21:33:15] AGENT (clinic):
+    Just to confirm, you'd like to book a general
+
+[21:33:16] PATIENT (bot):
+    Yeah, general checkup, whatever—just give me a time and date that works, um, like the soonest you have available?
+
+[21:33:28] AGENT (clinic):
+    It looks like you already have a routine check
+
+[21:33:29] PATIENT (bot):
+    Wait, so—do I already have an appointment scheduled or are we booking one right now? I'm confused, what's going on?
+
+[21:33:37] AGENT (clinic):
+    You already have a routine checkup
+
+[21:33:38] PATIENT (bot):
+    Oh okay, so I already have one booked? When is it then—like what day and time?
+
+[21:33:56] AGENT (clinic):
+    You already have a checkup appointment on file.
+
+[21:33:58] PATIENT (bot):
+    Yeah but when is it scheduled for? I need to know the actual date and time, like—is it this week or what?
+
+[21:34:04] AGENT (clinic):
+    I don't have the exact date of your current
+
+[21:34:05] PATIENT (bot):
+    Okay okay, so you can't see it—um, just book me a new one then, can you? Something soon, like tomorrow or Friday if you got it?
+
+[21:34:19] AGENT (clinic):
+    I don't have the exact date
+
+[21:34:20] PATIENT (bot):
+    Right, yeah, I got it—so just forget about the old one, can you book me something new? What's your earliest opening?
+
+[21:34:27] AGENT (clinic):
+    alright. If you need help reschedule
+
+[21:34:28] PATIENT (bot):
+    Yeah yeah, okay, so—what times do you actually have open? Like tomorrow morning or afternoon, whatever works?
+
+[21:34:35] AGENT (clinic):
+    Since you already have a routine checkup
+
+[21:34:37] PATIENT (bot):
+    Wait wait, I get it, I already have one—but I don't know when it is, so can't you just add another one or tell me when the existing one is? Just give me something concrete here.
+
+[21:34:55] AGENT (clinic):
+    I can't book another checkup since you already have one
+
+[21:34:56] PATIENT (bot):
+    Okay so—can you at least tell me when my current appointment is? Like the date and time? I need to know that much.
+
+[21:35:03] AGENT (clinic):
+    don't have access to your exact appointment date
+
+[21:35:04] PATIENT (bot):
+    Alright, um, so what do I do then? Should I just show up and figure it out, or—can you transfer me to someone who actually has that info?
+
+[21:35:20] AGENT (clinic):
+    I'm not able to see your
+
+[21:35:21] PATIENT (bot):
+    Yeah okay, look—can you just get me someone who can see it then? Transfer me or give me a number to call back, 'cause I need to know when I'm supposed to be there.
+
+[21:35:34] AGENT (clinic):
+    You can reach the clinic at eight three three
+
+[21:35:35] PATIENT (bot):
+    Yeah yeah, got it—so (833)... what's the rest? I need the full number, um, can you just spell it out?
+
+[21:35:45] AGENT (clinic):
+    The clinic phone number is eight three three
+
+[21:35:46] PATIENT (bot):
+    Okay okay, (833)—what's next? Just say the whole thing, I'm writing it down.
+
+[21:35:53] AGENT (clinic):
+    seven two five two four seven five
+
+[21:35:54] PATIENT (bot):
+    Right, so (833) 725-2475—wait, that's my callback number you gave me earlier, yeah? So I just call that back and they'll have my appointment info?
+
+[21:36:10] AGENT (clinic):
+    Yes. That's correct. Call eight three three
+
+[21:36:10] PATIENT (bot):
+    Got it, yeah, I'll call back and figure it out—thanks, bye.

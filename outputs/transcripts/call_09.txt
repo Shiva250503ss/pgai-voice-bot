@@ -1,0 +1,59 @@
+======================================================================
+CALL TRANSCRIPT - Scenario 9: Angry / frustrated patient (edge case)
+======================================================================
+Started:  2026-06-28 21:40:51
+Ended:    2026-06-28 21:44:15
+Duration: 204.5s
+Turns:    17
+======================================================================
+
+[21:41:02] AGENT (clinic):
+    This call may be recorded for quality and training purposes.
+
+[21:41:13] AGENT (clinic):
+    Thank you for calling PivotPoint Orthopedics. Would you like to create a demo patient profile? I just need your first and last name to get started.
+
+[21:41:14] PATIENT (bot):
+    Look, I'm not here for a demo—I need to book a follow-up appointment. My name's Robert Hayes, and honestly, I've been a patient there before, so you should already have my information.
+
+[21:41:41] AGENT (clinic):
+    Thanks for letting me know, Robert. Right now, I don't see a patient profile for you in the system. Would you like me to create a demo patient profile so I can help you book your follow-up appointment? I just need your first and last name to get started.
+
+[21:41:42] PATIENT (bot):
+    *sighs* Fine, whatever—Robert Hayes, that's R-O-B-E-R-T H-A-Y-E-S. But I gotta say, it's frustrating that you don't have me in the system already after last time.
+
+[21:42:10] AGENT (clinic):
+    Your patient profile is set up, and your date of birth is 07/04/2000 for demo purposes. How can I help you today?
+
+[21:42:11] PATIENT (bot):
+    Whoa, hold on—that's not right. My date of birth is June 30, 1970, not July 4th, 2000. Can you fix that before we go any further?
+
+[21:42:35] AGENT (clinic):
+    I can't update your date of birth directly, but I'll let our clinic support team know about the correction. They'll follow-up to get this fixed. The meantime, I can still help you book your follow-up appointment. Would you like to continue with scheduling?
+
+[21:42:36] PATIENT (bot):
+    Yeah, okay, fine—let's just get this appointment scheduled. What do I need to do?
+
+[21:42:50] AGENT (clinic):
+    Do you have a specific provider you'd like to see for your follow-up, or should I look for the first available appointment?
+
+[21:42:51] PATIENT (bot):
+    I don't really care at this point, just get me in as soon as possible. What's the soonest you've got available?
+
+[21:43:11] AGENT (clinic):
+    The soonest I can get you in is Tuesday, June 30. There's a 2PM slot with Carl Mintz PT. Would you like to book that, or would you prefer a later time that day?
+
+[21:43:12] PATIENT (bot):
+    Tuesday works fine—2PM is good, I can make that. Yeah, let's book it with Carl Mintz.
+
+[21:43:47] AGENT (clinic):
+    You're all set for a follow-up with Carl Mint. PT on Tuesday, June 30 at 2PM at Pivot Point Orthopedics. Please bring your photo ID insurance card, a list of your current medications, and any imaging discs if you have them. Is there anything else I can help you with today?
+
+[21:43:49] PATIENT (bot):
+    Alright, yeah, I got it—Tuesday at 2PM. And look, I appreciate you getting me in, even with all the hassle. Just... try to make sure I don't wait an hour like last time, okay? Thanks.
+
+[21:44:12] AGENT (clinic):
+    I understand. And I'll note your request about the wait time for the clinic team. Need anything else, just let me know. A good day.
+
+[21:44:13] PATIENT (bot):
+    Alright, thanks. Bye.

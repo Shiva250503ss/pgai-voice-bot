@@ -1,80 +1,53 @@
 ======================================================================
 CALL TRANSCRIPT - Scenario 5: Weekend appointment test (edge case)
 ======================================================================
-Started:  2026-06-28 16:11:52
-Ended:    2026-06-28 16:15:18
-Duration: 205.7s
-Turns:    24
+Started:  2026-06-28 19:22:42
+Ended:    2026-06-28 19:26:24
+Duration: 221.9s
+Turns:    15
 ======================================================================
 
-[16:12:04] AGENT (clinic):
+[19:22:54] AGENT (clinic):
     This call may be recorded for quality and training purposes.
 
-[16:12:08] PATIENT (bot):
-    Hi, um, yes, I'm calling to schedule an appointment? I've been meaning to do this for a while and, yeah, I really need to get something looked at.
+[19:23:05] AGENT (clinic):
+    Thank you for calling PivotPoint Orthopedics. Would you like to create a demo patient profile? I just need your first and last name to get started.
 
-[16:12:10] AGENT (clinic):
-    Thank you for calling Pivot Point Orthopedics. Would you like to create a demo?
+[19:23:06] PATIENT (bot):
+    Oh, um, yes, thank you for picking up! My name is Linda Park, and yeah, I'm calling because I really need to schedule an appointment, um, as soon as possible.
 
-[16:12:12] PATIENT (bot):
-    Oh, um, no, I'm not looking for a demo or anything like that. I actually need to schedule an appointment with the clinic, um, for myself. Is this the right place to do that?
+[19:23:30] AGENT (clinic):
+    Your patient profile is set up. And your date of birth is 07/04/2000 for demo purposes. How can I help you today?
 
-[16:12:33] AGENT (clinic):
-    Yes. You're in the right place to schedule an appointment. To get started, I'll need to create a demo profile for you. May I have your first and last name?
+[19:23:32] PATIENT (bot):
+    Oh wait, that's not quite right — my date of birth is actually July 22, 1980, so I'm 45 years old. But anyway, um, I'm hoping to get an appointment scheduled, and I was really wondering if you have anything available on a Saturday morning, like around 10 AM?
 
-[16:12:35] PATIENT (bot):
-    Oh okay, sure. My name is Linda Park, um, L-I-N-D-A P-A-R-K. And yeah, I really need to get in as soon as possible, ideally on a Saturday morning if you have anything available?
+[19:24:03] AGENT (clinic):
+    Thanks for sharing your date of birth, Linda. Can you tell me a bit about the reason for your visit? For example, is this for a new patient consult a follow-up, a routine checkup, or something urgent?
 
-[16:12:58] AGENT (clinic):
-    Your patient profile is set up, and your date of birth is 07/04/2000 for demo purposes. How can I help you today?
+[19:24:05] PATIENT (bot):
+    Yeah, um, it's for a new patient consult — I've been having some issues that I need to get checked out. But really, the main thing is, do you have Saturday at 10 AM available? That's pretty much the only time that works with my work schedule during the week.
 
-[16:12:59] PATIENT (bot):
-    Um, actually, I think there's a mistake there — my date of birth is July 22nd, 1980, not 2000. But anyway, like I was saying, I'm really hoping to schedule an appointment for Saturday at 10 AM if you have that available? That's really the only time that works with my work schedule during the week.
+[19:24:39] AGENT (clinic):
+    Linda, I do not see any Saturday appointments available, but there is an opening on Tuesday, July 7 at 10:30AM with. Would you like to book that? Or would you like to hear about other available times later in the week?
 
-[16:13:34] AGENT (clinic):
-    Thanks for clarifying your date of birth, Linda. Before I check Saturday availability, can you tell me the main reason for your visit? For example, is this for a new patient consultation, a follow-up?
+[19:24:41] PATIENT (bot):
+    Um, okay, I hear you, but like, are you sure there's absolutely no way to do Saturday at 10 AM? I really work Monday through Friday, so weekends are just... yeah, that's really when I need it. Can you double-check on that for me?
 
-[16:13:35] PATIENT (bot):
-    Yeah, um, it's a new patient thing — I've got some issues I need to get checked out, nothing too serious I think, but it's been bothering me. So, um, do you have Saturday at 10 AM open, or what does that look like availability-wise?
+[19:25:05] AGENT (clinic):
+    Let me check for Saturday, July 11 to see if there are any openings around 10AM. One moment.
 
-[16:13:37] AGENT (clinic):
-    A routine office visit, or something urgent?
+[19:25:06] PATIENT (bot):
+    Yeah, thank you, I really appreciate you checking — I'm hoping you can find something because Saturday really is the best day for me.
 
-[16:13:38] PATIENT (bot):
-    Oh, it's just routine, nothing urgent or emergency-type stuff. But um, yeah, so about that Saturday 10 AM slot — can you check if that's available for me?
+[19:25:24] AGENT (clinic):
+    I checked again. And there are no Saturday appointments available. The soonest openings are on week weekdays like Monday, July 13 at 9AM or 09:45AM. Would you like to book one of those, or would you like to hear about other weekday options?
 
-[16:14:14] AGENT (clinic):
-    It looks like you already have a routine office visit appointment booked. I can't schedule another of the same type, but I can help you reschedule your existing appointment. Or connect you to live support if you need something different. Would you like to reschedule your current appointment to Saturday at 10AM if it's available? Or do you need help with something else?
+[19:25:25] PATIENT (bot):
+    Oh, um, okay, I understand, that's frustrating but... yeah, I guess if Saturday really isn't an option, then Monday the 13th at 9 AM would work. Can you go ahead and book that for me?
 
-[16:14:15] PATIENT (bot):
-    Oh wait, um, I'm not sure about an existing appointment — I don't think I have one booked already. But yeah, if you can reschedule whatever that is to Saturday at 10 AM, that would be perfect for me, honestly. That's really the time that works best.
+[19:26:03] AGENT (clinic):
+    I was able to book you for Monday, July third thirteenth at 9AM with doctor Bricker at Pivot Point Orthopedics. We do not have Saturday appointments available, Please bring your photo ID, insurance card, a list of your current medications, and any imaging disks you have. Would you like to keep this appointment? Or look for a different day or time?
 
-[16:14:40] AGENT (clinic):
-    I'm unable to reschedule your appointment directly, but I can connect you a live support agent who can help with this right away.
-
-[16:14:41] PATIENT (bot):
-    Um, okay, yeah, that sounds good. Can you just, um, make sure to let them know I'm really hoping for Saturday at 10 AM? That's the only time that really works with my work schedule, so, yeah, please connect me.
-
-[16:14:45] AGENT (clinic):
-    You like me to transfer you now?
-
-[16:14:49] PATIENT (bot):
-    Yes, um, please go ahead and transfer me. And just to confirm, my callback number is (833) 725-2475 if they need to reach me, okay?
-
-[16:14:52] AGENT (clinic):
-    It looks like you want
-
-[16:14:53] PATIENT (bot):
-    Yeah, um, sorry, did you get cut off there? Are you transferring me now to the live agent?
-
-[16:14:59] AGENT (clinic):
-    Connecting you to a representative. Please wait.
-
-[16:15:00] PATIENT (bot):
-    Okay, um, thanks. I'll hold.
-
-[16:15:04] AGENT (clinic):
-    Hello. You've reached the Pretty Good AI test line. Goodbye.
-
-[16:15:05] PATIENT (bot):
-    Wait, um, hello? Is someone there? I was just transferred to schedule an appointment — can you help me with that?
+[19:26:04] PATIENT (bot):
+    Yeah, that's perfect, thank you so much — Monday the 13th at 9 AM works great, and um, I'll make sure to bring my ID, insurance card, and all that. I really appreciate you getting me in, and my callback number is (833) 725-2475 if you need to reach me. Thanks again, and goodbye!

@@ -1,62 +1,71 @@
 ======================================================================
 CALL TRANSCRIPT - Scenario 3: Cancel appointment
 ======================================================================
-Started:  2026-06-28 09:59:50
-Ended:    2026-06-28 10:01:57
-Duration: 127.4s
-Turns:    18
+Started:  2026-06-28 19:14:15
+Ended:    2026-06-28 19:18:20
+Duration: 245.0s
+Turns:    21
 ======================================================================
 
-[10:00:03] AGENT (clinic):
+[19:14:26] AGENT (clinic):
     This call may be recorded for quality and training purposes.
 
-[10:00:05] PATIENT (bot):
-    Hi, yeah, um, I'm calling to cancel an appointment I have coming up.
+[19:14:38] AGENT (clinic):
+    Thank you for calling PivotPoint Orthopedics. Would you like to create a demo patient profile? I just need your first and last name to get started.
 
-[10:00:07] AGENT (clinic):
-    Thank you for calling PivotPoint Orthopedics.
+[19:14:40] PATIENT (bot):
+    Hi, yeah, um—I'm calling to cancel an appointment actually, not create a new one. My name is Maria Gonzalez.
 
-[10:00:09] PATIENT (bot):
-    Hi, yeah, I'd like to cancel an upcoming appointment — my name is Maria Gonzalez.
+[19:15:05] AGENT (clinic):
+    Thanks for letting me know, Maria. Before I can help cancel your appointment, I'll need to create a demo patient profile for you. Can you please confirm your last name is spelled g o n z a l e s?
 
-[10:00:21] AGENT (clinic):
-    Hi, Maria. Before I can help with your appointment, would you like to create a demo patient profile?
+[19:15:07] PATIENT (bot):
+    Yeah, that's right—G-O-N-Z-A-L-E-Z. But um, I really just need to cancel my appointment, so can we skip the profile thing and just get that taken care of?
 
-[10:00:23] PATIENT (bot):
-    Um, no thanks, I just need to cancel my appointment.
+[19:15:35] AGENT (clinic):
+    I understand you wanna cancel your appointment. To process cancellations, I do need a demo patient profile. It only takes a moment and just requires your first and last name. Would you like me to create your profile now so I can help with your cancellation?
 
-[10:00:24] AGENT (clinic):
-    I just need your first and last name to get started.
+[19:15:36] PATIENT (bot):
+    Yeah, okay, I get it. So you already have my name—Maria Gonzalez. Um, what else do you need to actually cancel the appointment?
 
-[10:00:25] PATIENT (bot):
-    Sure, it's Maria Gonzalez.
+[19:15:59] AGENT (clinic):
+    Your patient profile has been created, and your date of birth is set as 07/04/2000 for demo purposes. How can I help you today?
 
-[10:00:44] AGENT (clinic):
-    Your patient profile is set up, and your date of birth is 07/04/2000. How can I help you today?
+[19:16:00] PATIENT (bot):
+    Um, actually my date of birth is February 5, 1997, not that date. But yeah, I'm calling to cancel my upcoming appointment—my situation changed and I just need it cancelled.
 
-[10:00:45] PATIENT (bot):
-    Um, that's not my date of birth, but anyway — I just need to cancel my upcoming appointment, please.
+[19:16:30] AGENT (clinic):
+    You'd have two upcoming appointments. One is with doctor Abricker on Tuesday, July 7. And the other is with doctor Zivni Lukovsky on Friday, July 17. Which one would you like to cancel?
 
-[10:01:03] AGENT (clinic):
-    You have an appointment scheduled with a Bricker on Friday, July 10. Is this the appointment you want to cancel?
+[19:16:32] PATIENT (bot):
+    Oh, um, I need to cancel both of them actually. My situation changed and I don't want to reschedule right now, so yeah, just cancel both appointments please.
 
-[10:01:05] PATIENT (bot):
-    Yeah, that sounds right — I'd like to go ahead and cancel that one.
+[19:16:55] AGENT (clinic):
+    I can help with that. Can you confirm you want to cancel your appointment with doctor Abrekar on July 7? And doctor Zegbigniew Lukowski on July 17?
 
-[10:01:19] AGENT (clinic):
-    Can you share the reason for canceling your appointment?
+[19:16:56] PATIENT (bot):
+    Yeah, that's right—both of them. I want to cancel both appointments, and um, I'll handle rebooking myself later if I need to.
 
-[10:01:21] PATIENT (bot):
-    Um, my situation just changed and I won't be able to make it. I just need to cancel for now.
+[19:17:22] AGENT (clinic):
+    Let me take care of canceling those appointments for you. One moment. Your appointment on July 7 with doctor Bricker has been canceled. There anything else I can help you with today?
 
-[10:01:39] AGENT (clinic):
-    You'd like to cancel your appointment with Abricker on Friday, July 10. Is that correct?
+[19:17:23] PATIENT (bot):
+    Um, what about the other one on July 17 with doctor Lukowski? Did that one get cancelled too?
 
-[10:01:41] PATIENT (bot):
-    Yeah, that's correct.
+[19:17:42] AGENT (clinic):
+    Your appointment with doctor Lukowski on July 17 is still scheduled. Can you share a brief reason for canceling this one? I'll take care of it right away.
 
-[10:01:53] AGENT (clinic):
-    Your appointment on July 10 with doctor Bricker has been canceled. Is there anything else I can help you with today?
+[19:17:43] PATIENT (bot):
+    Yeah, um, my situation just changed—I don't really need to get into details. Can you just go ahead and cancel it for me?
 
-[10:01:54] PATIENT (bot):
-    No, that's all — thanks so much, bye!
+[19:18:03] AGENT (clinic):
+    Your appointment on July 17 with doctor Lucosti has also been canceled. Is there anything else you need help with today?
+
+[19:18:04] PATIENT (bot):
+    No, that's it—thank you so much. I appreciate your help.
+
+[19:18:16] AGENT (clinic):
+    Both appointments are canceled. If you need anything else, just give us a call. Take care.
+
+[19:18:17] PATIENT (bot):
+    Thanks, you too. Bye.

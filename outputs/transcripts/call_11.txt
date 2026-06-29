@@ -1,0 +1,77 @@
+======================================================================
+CALL TRANSCRIPT - Scenario 11: Completely off-topic (edge case)
+======================================================================
+Started:  2026-06-28 21:54:01
+Ended:    2026-06-28 21:58:36
+Duration: 275.1s
+Turns:    23
+======================================================================
+
+[21:54:12] AGENT (clinic):
+    This call may be recorded for quality and training purposes.
+
+[21:54:24] AGENT (clinic):
+    Thank you for calling Pivot Point Orthopedics. Would you like to create a demo patient profile? Just need your first and last name to get started.
+
+[21:54:26] PATIENT (bot):
+    Oh hey, yeah, um... it's Daniel Brooks. B-R-O-O-K-S. But uh, before we do all that—do you guys happen to know any good restaurants in the area? I've been looking for somewhere decent to grab lunch.
+
+[21:54:47] AGENT (clinic):
+    Your patient profile is set up, and your date of birth is 07/04/2000 for demo purpose. How may I help you today?
+
+[21:54:48] PATIENT (bot):
+    Wait, hold on—that's not right, my date of birth is actually October 2, 1992, not that. Um, anyway, yeah... so like, have you worked there long? The weather's been pretty crazy lately, huh?
+
+[21:55:18] AGENT (clinic):
+    I'm actually a virtual assistant. So I don't experience the weather or work at the clinic in person. I'm here to help with appointments, questions about the clinic, medications, and more. Can I help you with today?
+
+[21:55:20] PATIENT (bot):
+    Oh right, right, my bad—that's wild that you're virtual, I didn't even think about that, you know? Um, so yeah I guess I should probably schedule something, but like... did you catch the game last night? I'm still thinking about that fourth quarter, man.
+
+[21:55:48] AGENT (clinic):
+    I don't watch games myself, but it sounds like it was exciting. Whenever you're ready, I can help you schedule an appointment. What kind of visit do you need?
+
+[21:55:49] PATIENT (bot):
+    Yeah, it was pretty intense! Um, honestly I'm not totally sure what I need yet—like, maybe just a general checkup or something? But hey, before we get into all that, do you know any good pizza places around the clinic? I'm always looking for recommendations.
+
+[21:56:21] AGENT (clinic):
+    I don't have recommendations for pizza places. But I could help with anything related to the clinic appointments, for your care. Would you like to go ahead and schedule a general checkup?
+
+[21:56:22] PATIENT (bot):
+    Yeah, yeah, sure, a general checkup sounds good. Um, so like when do you have openings? And actually, crazy question but do you know if they have good parking there? I hate when places don't have enough spots, it's so annoying.
+
+[21:56:35] AGENT (clinic):
+    Do you have a specific provider you'd like to see, or are you open to anyone available?
+
+[21:56:37] PATIENT (bot):
+    Um, I'm pretty open, honestly—whoever's available works for me. Hey, so like, what's the vibe of the clinic? Is it like super professional and sterile feeling or more chill, you know what I mean?
+
+[21:57:00] AGENT (clinic):
+    Ibad Point Orthopedics is focused on patient care and making visits comfortable and efficient. The staff aims to be friendly and helpful. Would you like to see the soonest available appointment for your general checkup?
+
+[21:57:02] PATIENT (bot):
+    Yeah, that sounds nice, um, friendly is always good. Sure, yeah, let's see what you got for soonest available. Oh, and real quick—what time of day do you usually have openings? I'm kind of a morning person, but I guess I could do afternoon too.
+
+[21:57:21] AGENT (clinic):
+    It looks like you already have a general checkup appointment booked. If you wanna reschedule or cancel it, I can connect you to a team member for help. Would you like to do that?
+
+[21:57:23] PATIENT (bot):
+    Oh wait, I already have one? Um, that's cool I guess—when is it scheduled for? And like, do they serve coffee or anything at the clinic, or should I grab some before I come in?
+
+[21:57:40] AGENT (clinic):
+    Yes. You already have a general checkup appointment on file. If you need to change or cancel it, I can transfer you to someone who can help. Would you like to speak with a team member about your appointment?
+
+[21:57:42] PATIENT (bot):
+    Oh yeah, um, maybe I should just keep it as is then—no need to change anything. Hey, before I go though, my callback number is (833) 725-2475 if you need to reach me. So like, do you think it'll rain this week or what?
+
+[21:58:12] AGENT (clinic):
+    I don't have weather updates. But your callback number is (833) 725-2475. Is there anything else I can help you with today?
+
+[21:58:13] PATIENT (bot):
+    Nah, I think that's pretty much it, man. Thanks for your help, I appreciate it—this was pretty painless, you know? I gotta take off anyway, got some stuff to do. Thanks again, talk soon!
+
+[21:58:32] AGENT (clinic):
+    Glad I could help. Your appointment is all set. Have a great day.
+
+[21:58:33] PATIENT (bot):
+    You too, man. Thanks again, bye!

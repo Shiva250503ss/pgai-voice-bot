@@ -1,0 +1,77 @@
+======================================================================
+CALL TRANSCRIPT - Scenario 12: New patient info collection stress test
+======================================================================
+Started:  2026-06-28 22:00:24
+Ended:    2026-06-28 22:04:31
+Duration: 247.4s
+Turns:    23
+======================================================================
+
+[22:00:36] AGENT (clinic):
+    This call may be recorded for quality and training purposes.
+
+[22:00:48] AGENT (clinic):
+    Thank you for calling Pivot Point Orthopaedics. Would you like to create a demo patient profile? I just need your first and last name to get started.
+
+[22:00:49] PATIENT (bot):
+    Oh, hi! Yeah, um, I'm here to register as a new patient — my name is Olivia Bennett.
+
+[22:01:08] AGENT (clinic):
+    Your patient profile is set up. And your date of birth is 07/04/2000 for demo purposes. How may I help you today?
+
+[22:01:09] PATIENT (bot):
+    Oh wait, um, that's not right — my date of birth is actually March 14th, 1998, not that date. Can you correct that for me?
+
+[22:01:34] AGENT (clinic):
+    I can't update your date of birth directly. But I'll let our clinic support team know about the correction you need. They'll follow-up with you as soon as possible. Would you like to continue with scheduling an appointment, or is there anything else I can help with right now?
+
+[22:01:35] PATIENT (bot):
+    Yeah, um, actually before we move forward — I need to correct myself real quick. It's March 4th, 1998, not the 14th. I got confused for a second there, sorry about that. So it should be March 4th, 1998. Can you make sure that gets noted?
+
+[22:02:16] AGENT (clinic):
+    I've documented that your correct date of birth is 03/04/1998. The clinic support team will update your record and follow-up if needed. Would you like to schedule an appointment? Or do anything else today?
+
+[22:02:17] PATIENT (bot):
+    Oh perfect, thank you! Yeah, um, I'd like to go ahead and book a first appointment if you have any openings available soon?
+
+[22:02:36] AGENT (clinic):
+    You'd like to schedule your first visit as a new patient Just to confirm, is this for a new patient consultation to establish care at our clinic?
+
+[22:02:37] PATIENT (bot):
+    Yeah, that's right — I'm a new patient and I'd like to set up my first appointment to get established with the clinic. Whenever you have something available would be great!
+
+[22:02:58] AGENT (clinic):
+    It looks like there's already a new patient consult appointment booked under your name. If you'd like, I can help you
+
+[22:02:59] PATIENT (bot):
+    Oh, wait — there's already an appointment booked? Um, that's surprising, I wasn't expecting that. What time is it scheduled for?
+
+[22:03:03] AGENT (clinic):
+    reschedule or cancel that appointment, or I can connect you with our live support team.
+
+[22:03:04] PATIENT (bot):
+    Oh, um, okay — actually, can you just connect me with the live support team? I want to make sure everything's set up right with my correct date of birth and all that before my appointment.
+
+[22:03:17] AGENT (clinic):
+    Yes. Our system shows a new patient consult appointment is already scheduled for you. Would you like details about that appointment? Or do you need help rescheduling or canceling it?
+
+[22:03:18] PATIENT (bot):
+    Yeah, um, I'd like to hear the details about that appointment — what date and time is it scheduled for?
+
+[22:03:38] AGENT (clinic):
+    I don't have access to the exact date and time of your appointment, but our live support team can provide those details right away. Would you like me to connect you with them now?
+
+[22:03:39] PATIENT (bot):
+    Yeah, that sounds good — go ahead and connect me with them so I can confirm everything and make sure my birth date is correct in the system.
+
+[22:04:00] AGENT (clinic):
+    It looks like you'll need to speak with our clinic support team to finish booking your first appointment and update your date of birth. I'll connect you now. Please stay on the line.
+
+[22:04:01] PATIENT (bot):
+    Okay, sounds good — thank you for your help!
+
+[22:04:15] AGENT (clinic):
+    Connecting you to a representative. Please wait. Hello. You've reached the Pretty Good AI test line. Goodbye.
+
+[22:04:16] PATIENT (bot):
+    Um, hello? I'm still here — I was just transferred over. Can someone help me with my appointment details and make sure my date of birth is updated to March 4th, 1998?

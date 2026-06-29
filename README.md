@@ -4,7 +4,7 @@ An outbound **voice bot** for the Pretty Good AI AI Engineering Challenge. It
 phones a clinic line (`+1-805-439-8008`) and plays a realistic **patient** —
 scheduling, refills, insurance questions, and deliberately tricky edge cases —
 to probe how the clinic's AI agent behaves. Audio runs over Twilio Media Streams
-with **Deepgram** for real-time speech-to-text, **Claude Sonnet** for the patient
+with **Deepgram** for real-time speech-to-text, **Claude Haiku 4.5** for the patient
 persona, and **ElevenLabs** for natural text-to-speech. Every call is recorded and
 transcribed automatically. You run **one scenario at a time**, manually.
 
@@ -85,6 +85,6 @@ Edge-case scenarios print a **"watch for"** reminder after the call.
 ## Notes & limits
 
 - One call at a time, always triggered with `--scenario N`; nothing auto-runs.
-- A safety cap (`MAX_CALL_SECONDS` in `main.py`, default 240s) ends stuck calls.
+- A safety cap (`MAX_CALL_SECONDS` in `main.py`, default 360s) ends stuck calls.
 - If Deepgram/Twilio drops, the handler logs the error and ends the call cleanly,
   still saving whatever transcript was captured.

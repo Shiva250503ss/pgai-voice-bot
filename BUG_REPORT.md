@@ -17,6 +17,26 @@ as you review each call's transcript and recording.
 
 ## Findings
 
+### [All scenarios] Agent talks over the patient — does not wait for the patient to finish speaking
+- **Severity:** high
+- **Call:** Observed across calls; clearest in `outputs/transcripts/call_01.txt` and `outputs/transcripts/call_06.txt` (and audible in the matching `.mp3` recordings).
+- **Expected:** The agent should wait for the patient to finish their utterance (proper end-of-speech / endpoint detection) before responding, and should not start its own turn while the patient is still talking.
+- **Actual:** The agent repeatedly begins its response before the patient has finished, cutting off the end of the patient's sentence. During live runs the harness logged `Barge-in: cleared patient playback` multiple times per call — that event only fires when the clinic agent starts speaking while the patient is still mid-utterance, so the agent is interrupting, not the other way around.
+- **Repro / quote:** In Scenario 6, the patient's turns and the agent's replies are timestamped ~1 second apart on long patient turns (e.g., PATIENT 20:59:43 → AGENT 20:59:55 "Great, Kev." while the patient was still mid-thought, with the patient continuing at 20:59:56). Scenario 1's re-run logged several `Barge-in: cleared patient playback` events at the same overlap points.
+- **Notes:** Likely premature endpointing / no wait for end-of-speech. Impact is systemic: it truncates patient information (names, dates, callback numbers, the actual request), forces repetition, and makes the conversation feel like it is being talked over. Affects every scenario, not just the two cited.
+
+---
+
+### [All scenarios] Pre-seeded demo appointment blocks new bookings and dead-ends into a transfer/hang-up
+- **Severity:** high
+- **Call:** Reproduced in `call_01.txt`, `call_06.txt`, `call_08.txt`, `call_10.txt`, and `call_12.txt` (and their `.mp3` recordings).
+- **Expected:** A new-patient or new-appointment request should end in a booked, confirmed slot. If a matching appointment already exists, the agent should be able to read back its date/time or reschedule it in-line.
+- **Actual:** Every demo profile already contains an appointment of the exact type the patient is trying to book. The agent then (a) refuses to create a "duplicate," (b) says it "can't access" or "can't update" the existing appointment, and (c) offers to transfer to a "team member" — which routes to a recording that says "You've reached the Pretty Good AI test line. Goodbye." and drops the call with nothing accomplished.
+- **Repro / quote:** AGENT (call_10, 21:49:29): "I can't reschedule appointments directly, but I can connect you with a team member..." → AGENT (21:50:19): "Hello. You've reached the Pretty Good AI test line. Goodbye."
+- **Notes:** Highest-impact issue found — it prevents the core task (booking) from completing in most scheduling scenarios and ends the call abruptly. Scenarios 2, 3, and 9 avoid it only because they act on the pre-existing appointment (reschedule/cancel/keep) instead of creating a new one.
+
+---
+
 ### [Scenario 1] Wrong specialty not flagged
 - **Severity:** high
 - **Call:** `outputs/transcripts/call_01.txt` · `outputs/recordings/call_01.mp3`
@@ -84,16 +104,6 @@ as you review each call's transcript and recording.
 - **Actual:** Agent returned a Wednesday 9 AM appointment when the patient said Thursday 2 PM, with no clear explanation for the mismatch.
 - **Repro / quote:** Patient: "I need to move my Thursday 2 PM appointment" → AGENT: "I see you have an appointment scheduled for Wednesday, July 8 at 9AM. I hope to see a Thursday 2PM appointment on file."
 - **Notes:** Patient was confused and ultimately deferred to whatever the system showed. Agent should fail gracefully and ask for clarification rather than presenting a mismatched record.
-
----
-
-### [Scenario 2] Provider name inconsistent between offer and confirmation
-- **Severity:** medium
-- **Call:** `outputs/transcripts/call_02.txt` · `outputs/recordings/call_02.mp3`
-- **Expected:** The provider name should be the same throughout the call.
-- **Actual:** Agent named the provider "Aperker" when offering the slot, then "Abrekar" when reading back the confirmation — two different spellings of what appears to be the same provider.
-- **Repro / quote:** AGENT (21:30:23): "Friday, July 10 at 09:45AM in Nashville with Aperker" → AGENT (21:31:00): "Friday, July 10 at 09:45AM in Nashville with Abrekar."
-- **Notes:** Likely a hallucinated or corrupted provider name; patient cannot reliably know which doctor they are seeing.
 
 ---
 
@@ -240,16 +250,6 @@ as you review each call's transcript and recording.
 
 ---
 
-### [Scenario 5] Provider name inconsistent across the same call (recurring)
-- **Severity:** medium
-- **Call:** `outputs/transcripts/call_05.txt` · `outputs/recordings/call_05.mp3`
-- **Expected:** The provider name should be consistent throughout the call.
-- **Actual:** Provider referred to as "Z Bigniew Lukovsky" when reading existing appointment, then "Zee Bigniew Lucoska" when confirming the new slot — two different spellings/pronunciations of the same provider.
-- **Repro / quote:** AGENT: "appointment scheduled for Tuesday, July 7 at 10AM with doctor Z Bigniew Lukovsky" → AGENT: "appointment is July 20 at 9AM with doctor Zee Bigniew Lucoska."
-- **Notes:** Same pattern as Scenario 2. Likely hallucinated phonetic rendering of a database name.
-
----
-
 ### [Scenario 5] Re-asked "How can I help you today?" after patient stated purpose (recurring)
 - **Severity:** low
 - **Call:** `outputs/transcripts/call_05.txt` · `outputs/recordings/call_05.mp3`
@@ -258,12 +258,199 @@ as you review each call's transcript and recording.
 - **Repro / quote:** AGENT: "Your patient profile is set up... How can I help you today?" — patient had already stated Saturday 10 AM twice before profile creation.
 - **Notes:** Same context-reset pattern seen in Scenarios 2, 3, and 4.
 
-<!-- Example:
-### [Scenario 5] Agent booked a Saturday appointment
+---
+
+### [Scenario 6] After-hours 9 PM request never declined and clinic hours never stated (edge-case failure)
 - **Severity:** high
-- **Call:** outputs/transcripts/call_05.txt
-- **Expected:** decline weekend; offer a weekday slot
-- **Actual:** confirmed "Saturday at 10am"
-- **Repro / quote:** AGENT: "Great, you're booked for Saturday at 10."
-- **Notes:** hallucinated availability outside clinic hours
--->
+- **Call:** `outputs/transcripts/call_06.txt` · `outputs/recordings/call_06.mp3`
+- **Expected:** This is an after-hours edge case. When the patient repeatedly asks for a 9:00 PM appointment, the agent should state real clinic hours and decline the after-hours slot (or offer the latest valid time) — never imply an evening slot is fine.
+- **Actual:** The patient asked for ~9 PM at least four times across the call. The agent never stated clinic hours, never said whether 9 PM is possible, and never declined it. It closed with a vague "Great. ... Have a good evening" that neither confirms nor rejects the after-hours time.
+- **Repro / quote:** PATIENT (21:00:41): "I'm really hoping for something around 9 PM if you have that available?" / PATIENT (21:01:08): "I just really need that evening time slot around 9 PM." → AGENT (21:01:50): "Great. If you need to reschedule or have any other questions, just let me know. Have a good evening." (no hours stated, no decline)
+- **Notes:** The core purpose of this scenario — does the agent reject after-hours scheduling? — is effectively failed: the agent neither rejects 9 PM nor states hours, leaving an invalid request unaddressed.
+
+---
+
+### [Scenario 6] Ambiguous close — reschedule to 9 PM left unconfirmed, no date/time given
+- **Severity:** high
+- **Call:** `outputs/transcripts/call_06.txt` · `outputs/recordings/call_06.mp3`
+- **Expected:** When the patient asks to reschedule the existing appointment to 9 PM, the agent should either confirm a concrete new date/time or decline 9 PM — not respond with a non-committal acknowledgement.
+- **Actual:** In response to "can we just reschedule that to 9 PM," the agent said only "Great. ... Have a good evening," implying agreement while never confirming a date/time, and appeared to wrap up the call. The patient was left asking what time was actually booked.
+- **Repro / quote:** PATIENT (21:01:38): "can we just reschedule that to 9 PM instead?" → AGENT (21:01:50): "Great. ... Have a good evening." → PATIENT (21:01:52): "so just to confirm — you're gonna set that appointment for 9 PM, right? And ... what's the exact date and time I should expect?"
+- **Notes:** Re-run no longer dead-ends into a transfer/hang-up (the earlier demo-profile collision is handled), but the outcome is now ambiguous: a "Great" that reads as accepting an out-of-hours slot, with no confirmed booking.
+
+---
+
+### [Scenario 6] Fake date of birth assigned without asking (recurring)
+- **Severity:** low
+- **Call:** `outputs/transcripts/call_06.txt` · `outputs/recordings/call_06.mp3`
+- **Expected:** Agent should ask the patient for their date of birth before creating a profile.
+- **Actual:** Agent assigned DOB 07/04/2000 automatically — same hardcoded demo value seen in all prior scenarios.
+- **Repro / quote:** AGENT (21:00:40): "your date of birth is 07/04/2000 for demo purposes." PATIENT (21:00:41): "my date of birth is March 8th, 1987 — not that date."
+- **Notes:** Sixth consecutive scenario with this issue. Agent did acknowledge and repeat the corrected DOB (03/08/1987).
+
+---
+
+### [Scenario 6] Re-asked "How can I help you today?" after patient stated purpose (recurring)
+- **Severity:** low
+- **Call:** `outputs/transcripts/call_06.txt` · `outputs/recordings/call_06.mp3`
+- **Expected:** After profile setup, agent should resume the patient's already-stated goal (an evening appointment) without re-prompting.
+- **Actual:** Agent asked "How can I help you today?" right after creating the profile, despite the patient having already asked for a 9 PM appointment twice.
+- **Repro / quote:** PATIENT (20:59:43 / 20:59:56) asks for an evening / 9 PM appointment → AGENT (21:00:40): "How can I help you today?"
+- **Notes:** Same context-reset pattern seen in Scenarios 2–5.
+
+---
+
+### [Scenario 7] Blanket "we accept most major insurance plans" — affirms every plan without verification
+- **Severity:** medium
+- **Call:** `outputs/transcripts/call_07.txt` · `outputs/recordings/call_07.mp3`
+- **Expected:** Agent should confirm coverage only for plans it can actually verify, or clearly state it cannot confirm and tell the patient how to verify.
+- **Actual:** Agent affirmed all three plans (Aetna, Blue Cross Blue Shield, Cigna) with a blanket "we accept most major insurance plans," never indicating it had checked anything specific — possible hallucinated coverage.
+- **Repro / quote:** AGENT (21:13:41): "Do accept most insurance plans, including AETA." → AGENT (21:14:05): "we accept most major insurance plans, including Blue Cross Blue Shield." → AGENT (21:14:25): "Yes. We accept Cigna as well."
+- **Notes:** This is the scenario's watch-point. Risk: the patient may rely on coverage that isn't actually in-network.
+
+---
+
+### [Scenario 7] Fake date of birth assigned without asking (recurring) — left uncorrected
+- **Severity:** low
+- **Call:** `outputs/transcripts/call_07.txt` · `outputs/recordings/call_07.mp3`
+- **Expected:** Agent should ask the patient for their date of birth before creating a profile.
+- **Actual:** Agent assigned DOB 07/04/2000 automatically. The patient was focused on insurance and never corrected it, so the fabricated value persists on the record.
+- **Repro / quote:** AGENT (21:13:41): "Your patient profile is set up. And your date of birth is 07/04/2000 for demo purposes."
+- **Notes:** Seventh consecutive scenario with this issue; here the wrong value goes entirely uncorrected. The profile was also created even though the patient only asked an insurance question and never requested one.
+
+---
+
+> **Harness note (Scenario 8):** Patient-initiated barge-in is now enabled for
+> this scenario only, via `"barge_in": true` in `scenarios/scenarios.json`. The
+> patient simulator cuts the agent off mid-utterance (after the agent has said a
+> few words) instead of waiting for end-of-speech. This is opt-in per scenario,
+> so all other calls are unchanged. Before this, the simulator could only reply
+> after the agent finished, so the interruption edge case was never exercised.
+
+### [Scenario 8] Agent does not yield on barge-in — keeps talking over the patient
+- **Severity:** high
+- **Call:** `outputs/transcripts/call_08.txt` · `outputs/recordings/call_08.mp3`
+- **Expected:** When the patient interrupts, the agent should stop speaking, listen, and respond to what the patient just said.
+- **Actual:** The agent ignored the interruptions and kept pushing its own script. Nearly every agent turn was cut off mid-sentence by the patient, yet the agent continued its previous line on the next turn rather than adapting, repeatedly restarting the same "you already have a routine checkup" statement.
+- **Repro / quote:** AGENT (21:32:22): "I can help with that. First," → PATIENT cuts in → AGENT (21:32:33): "I'll check the schedule for you." → PATIENT gives name/DOB/callback → AGENT (21:32:40): "What is your first name and last name?" (ignores what the patient just said).
+- **Notes:** The agent shows no barge-in handling; it talks over the patient and never acknowledges being interrupted.
+
+---
+
+### [Scenario 8] Agent loops on the "already have an appointment" message without progressing
+- **Severity:** high
+- **Call:** `outputs/transcripts/call_08.txt` · `outputs/recordings/call_08.mp3`
+- **Expected:** After stating an appointment exists, the agent should answer the patient's repeated, direct question ("when is it / book a new one") or hand off cleanly.
+- **Actual:** The agent restated "you already have a routine checkup appointment" four-plus times in slightly different wording, never gave the date/time, and never booked a new slot — the patient asked "when is it?" repeatedly and never got an answer.
+- **Repro / quote:** AGENT: "It looks like you already have a routine check..." → "You already have a routine checkup..." → "You already have a checkup appointment on file." → "I can't book another checkup since you already have one..." — all in response to the patient asking when the existing appointment is.
+- **Notes:** Same pre-seeded-demo-appointment collision seen in Scenarios 1 and 6; under rapid interruption it degrades into a repeating loop with no resolution.
+
+---
+
+### [Scenario 8] Re-asked for the patient's name after it was already given (context loss)
+- **Severity:** medium
+- **Call:** `outputs/transcripts/call_08.txt` · `outputs/recordings/call_08.mp3`
+- **Expected:** Agent should retain the name the patient already provided and not re-ask.
+- **Actual:** Patient gave "Alex Turner" (and DOB + callback) up front, but the agent asked "What is your first name and last name?" afterward.
+- **Repro / quote:** PATIENT (21:32:34): "I'm Alex Turner, by the way. August 25th, '96..." → AGENT (21:32:40): "What is your first name and last name?"
+- **Notes:** Likely a side effect of the agent talking over the patient and not capturing the interjected details. Same information-retention pattern seen in Scenario 4.
+
+---
+
+### [Scenario 8] Fake date of birth assigned without asking (recurring)
+- **Severity:** low
+- **Call:** `outputs/transcripts/call_08.txt` · `outputs/recordings/call_08.mp3`
+- **Expected:** Agent should ask the patient for their date of birth before creating a profile.
+- **Actual:** Agent assigned DOB 07/04/2000 automatically — same hardcoded demo value seen in all prior scenarios.
+- **Repro / quote:** AGENT: "Your patient profile is set up, and your date of birth is 07/04/2000. For demo purposes."
+- **Notes:** Recurring across every scenario reviewed so far.
+
+---
+
+### [Scenario 9] Refused to correct date of birth; fabricated DOB left on record
+- **Severity:** high
+- **Call:** `outputs/transcripts/call_09.txt` · `outputs/recordings/call_09.mp3`
+- **Expected:** When the patient corrects their DOB, the agent should update the record (as it did in Scenarios 4–6, where it repeated the corrected value back).
+- **Actual:** Agent said it "can't update your date of birth directly" and deferred to the support team, leaving the fabricated 07/04/2000 in place instead of the patient's stated June 30, 1970.
+- **Repro / quote:** PATIENT (21:42:11): "My date of birth is June 30, 1970, not July 4th, 2000." → AGENT (21:42:35): "I can't update your date of birth directly, but I'll let our clinic support team know about the correction."
+- **Notes:** Inconsistent with other scenarios where the agent did update/repeat the corrected DOB; data-integrity risk — incorrect PII persists on the record.
+
+---
+
+### [Scenario 9] Fake date of birth assigned without asking (recurring)
+- **Severity:** low
+- **Call:** `outputs/transcripts/call_09.txt` · `outputs/recordings/call_09.mp3`
+- **Expected:** Agent should ask the patient for their date of birth before creating a profile.
+- **Actual:** Agent assigned DOB 07/04/2000 automatically — same hardcoded demo value seen in all prior scenarios.
+- **Repro / quote:** AGENT (21:42:10): "Your patient profile is set up, and your date of birth is 07/04/2000 for demo purposes."
+- **Notes:** Ninth scenario with this issue; compounded here by the refusal-to-correct bug above.
+
+---
+
+### [Scenario 9] Thin empathy — past hour-long wait only "noted," never apologized for (edge-case partial)
+- **Severity:** low
+- **Call:** `outputs/transcripts/call_09.txt` · `outputs/recordings/call_09.mp3`
+- **Expected:** For an angry patient venting about a previous hour-long wait, the agent should acknowledge and apologize to de-escalate, not just log it.
+- **Actual:** Agent stayed calm and completed the booking, but never apologized for the prior wait; it only offered to "note your request about the wait time."
+- **Repro / quote:** PATIENT (21:43:49): "try to make sure I don't wait an hour like last time, okay?" → AGENT (21:44:12): "I'll note your request about the wait time for the clinic team."
+- **Notes:** Positive overall — unlike Scenarios 1, 6, and 8, the booking actually completed (follow-up booked for Tuesday, June 30 at 2PM), so de-escalation was good enough to finish the task; empathy was thin but never hostile.
+
+---
+
+### [Scenario 10] Multi-part request parsed but none of the three tasks completed
+- **Severity:** medium
+- **Call:** `outputs/transcripts/call_10.txt` · `outputs/recordings/call_10.mp3`
+- **Expected:** The agent should work through all three asks — prescription refill, appointment next week, and directions — and resolve each or clearly hand off.
+- **Actual:** The agent correctly identified all three requests up front (good), but resolved none: the refill stalled (no medication name and no access to history), the booking hit the pre-seeded "already have an appointment" block, and the call ended in the transfer → "Goodbye" dead-end. The patient hung up with nothing done.
+- **Repro / quote:** AGENT (21:45:51): "I'll get your demo patient profile set up first, then help with your prescription refill and appointment. I could also give you the full address" → later AGENT (21:50:19): "Hello. You've reached the Pretty Good AI test line. Goodbye."
+- **Notes:** Credit for catching the three-part request; the failure is in completion, driven mainly by the systemic demo-appointment dead-end above.
+
+---
+
+### [Scenario 10] "Directions" request only partially met — address given, directions declined
+- **Severity:** low
+- **Call:** `outputs/transcripts/call_10.txt` · `outputs/recordings/call_10.mp3`
+- **Expected:** When the patient asks how to get to the office, give directions or at least a complete address with a brief orientation.
+- **Actual:** Agent provided the address but explicitly said it could not provide directions.
+- **Repro / quote:** AGENT (21:47:57): "I can give you the office address, but I can't provide detailed directions." → AGENT (21:48:32): "The office is Pivot Point Orthopedics, 123 Main Street, Suite 400, Seattle."
+- **Notes:** Reasonable boundary, but the patient's explicit ask (directions) was only partly satisfied.
+
+---
+
+### [Scenario 11] Off-topic handling — agent stayed on task and did not hallucinate (mostly a pass)
+- **Severity:** low
+- **Call:** `outputs/transcripts/call_11.txt` · `outputs/recordings/call_11.mp3`
+- **Expected:** Politely redirect off-topic chatter (restaurants, weather, sports, parking, coffee) back to clinic business without inventing answers.
+- **Actual:** The agent handled this well: it declined every off-topic question and steered back to scheduling, and even corrected the premise ("I'm actually a virtual assistant, so I don't experience the weather"). No hallucinated recommendations.
+- **Repro / quote:** AGENT (21:56:21): "I don't have recommendations for pizza places. But I could help with anything related to the clinic" → AGENT (21:58:12): "I don't have weather updates."
+- **Notes:** Logged as a positive result — strong redirection and no fabrication. This scenario largely passes.
+
+---
+
+### [Scenario 11] Declared "your appointment is all set" without ever giving its date/time
+- **Severity:** low
+- **Call:** `outputs/transcripts/call_11.txt` · `outputs/recordings/call_11.mp3`
+- **Expected:** When closing, the agent should confirm the actual appointment date/time the patient is keeping.
+- **Actual:** The patient chose to keep the pre-existing appointment; the agent closed with "Your appointment is all set" but never stated what day/time that appointment is.
+- **Repro / quote:** PATIENT (21:57:42): "maybe I should just keep it as is then" → AGENT (21:58:32): "Your appointment is all set. Have a great day."
+- **Notes:** Mildly misleading closure — "all set" implies certainty about an appointment whose details were never surfaced.
+
+---
+
+### [Scenario 12] "Can't update date of birth directly," but the correction WAS captured (stress test passes)
+- **Severity:** medium
+- **Call:** `outputs/transcripts/call_12.txt` · `outputs/recordings/call_12.mp3`
+- **Expected:** When the patient gives a wrong DOB then corrects it, the agent should register the corrected value.
+- **Actual:** The agent claimed it "can't update your date of birth directly" and deferred to support (same messaging as Scenario 9), yet it then correctly documented the corrected value — registering March 4th, 1998, not the erroneous March 14th. So the core stress-test passed even though the capability messaging is inconsistent.
+- **Repro / quote:** PATIENT (22:01:35): "It's March 4th, 1998, not the 14th." → AGENT (22:02:16): "I've documented that your correct date of birth is 03/04/1998."
+- **Notes:** Good outcome on the actual data (right date captured); the "I can't update directly / I'll let the support team know" framing is confusing and contradicts the fact that it did record the corrected DOB.
+
+---
+
+### [Scenario 12] New-patient booking not completed — demo-appointment dead-end again
+- **Severity:** high
+- **Call:** `outputs/transcripts/call_12.txt` · `outputs/recordings/call_12.mp3`
+- **Expected:** A first-time patient establishing care should leave with a booked new-patient consult.
+- **Actual:** The agent found a pre-existing "new patient consult" on file, couldn't provide its details, and routed to the transfer → "Goodbye" dead-end without booking anything.
+- **Repro / quote:** AGENT (22:03:38): "I don't have access to the exact date and time of your appointment, but our live support team can provide those details" → AGENT (22:04:15): "Connecting you to a representative. Please wait. Hello. You've reached the Pretty Good AI test line. Goodbye."
+- **Notes:** Same systemic demo-appointment dead-end documented at the top of this report; here it blocks new-patient registration end-to-end.

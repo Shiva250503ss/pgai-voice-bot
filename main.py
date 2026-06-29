@@ -180,7 +180,14 @@ async def run_call(scenario: dict) -> None:
             except Exception:  # noqa: BLE001
                 pass
         server.should_exit = True
-        await server_task
+        try:
+            await asyncio.wait_for(asyncio.shield(server_task), timeout=10.0)
+        except (asyncio.TimeoutError, Exception):
+            server_task.cancel()
+            try:
+                await server_task
+            except Exception:
+                pass
 
 
 def print_summary(recorder: CallRecorder, scenario: dict) -> None:

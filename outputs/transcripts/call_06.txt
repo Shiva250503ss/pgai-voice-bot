@@ -1,0 +1,53 @@
+======================================================================
+CALL TRANSCRIPT - Scenario 6: After-hours scheduling test (edge case)
+======================================================================
+Started:  2026-06-28 20:59:18
+Ended:    2026-06-28 21:01:53
+Duration: 155.1s
+Turns:    15
+======================================================================
+
+[20:59:30] AGENT (clinic):
+    This call may be recorded for quality and training purposes.
+
+[20:59:42] AGENT (clinic):
+    Thank you for calling PivotPoint Orthopedics. Would you like to create a demo patient profile? I just need your first and last name to get started.
+
+[20:59:43] PATIENT (bot):
+    Yeah, hi, um... I'm Kevin Doyle, and actually I'm already looking to schedule an appointment if possible? I've got a knee that's been bothering me and I'm hoping to get in for a new patient consultation.
+
+[20:59:55] AGENT (clinic):
+    Great, Kev.
+
+[20:59:56] PATIENT (bot):
+    So, um, I was really hoping to get something in the evening if you have it — like around 9 PM would be ideal since I work pretty long hours and don't really want to take time off work if I can help it.
+
+[21:00:19] AGENT (clinic):
+    Thanks for sharing your preference. Kevin, before I can check appointment times, I'll need to create your demo patient profile. Can I get your last name, please?
+
+[21:00:20] PATIENT (bot):
+    Oh yeah, sorry — it's Doyle, D-O-Y-L-E. And, um, just to confirm, you guys do have evening appointments available, right?
+
+[21:00:40] AGENT (clinic):
+    Your patient profile is set up, and your date of birth is 07/04/2000 for demo purposes. How can I help you today?
+
+[21:00:41] PATIENT (bot):
+    Actually, um, my date of birth is March 8th, 1987 — not that date. But yeah, like I said, I'm looking to schedule an appointment for a new patient consultation on my knee, and I'm really hoping for something around 9 PM if you have that available?
+
+[21:01:07] AGENT (clinic):
+    Thanks for clarifying your date of birth, Kevin. Do you have a specific provider you'd like to see, or are you open to the first available?
+
+[21:01:08] PATIENT (bot):
+    I'm pretty open to whoever's available, yeah — I just really need that evening time slot around 9 PM if possible. What do you have?
+
+[21:01:37] AGENT (clinic):
+    It looks like you already have a new patient consultation appointment booked. If you'd like, I can help you reschedule or cancel that appointment Would you like to make a change, or do you need help with something else?
+
+[21:01:38] PATIENT (bot):
+    Oh okay, that works — yeah, um, can we just reschedule that to 9 PM instead? That would be perfect for me.
+
+[21:01:50] AGENT (clinic):
+    Great. If you need to reschedule or have any other questions, just let me know. Have a good evening.
+
+[21:01:52] PATIENT (bot):
+    Wait, um, so just to confirm — you're gonna set that appointment for 9 PM, right? And, uh, what's the exact date and time I should expect?

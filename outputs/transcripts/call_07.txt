@@ -1,0 +1,35 @@
+======================================================================
+CALL TRANSCRIPT - Scenario 7: Insurance question
+======================================================================
+Started:  2026-06-28 21:12:41
+Ended:    2026-06-28 21:14:37
+Duration: 116.4s
+Turns:    9
+======================================================================
+
+[21:12:53] AGENT (clinic):
+    This call may be recorded for quality and training purposes.
+
+[21:13:04] AGENT (clinic):
+    Thank you for calling Pivot Point Orthopedics. Would you like to create a demo patient profile I just need your first and last name to get started.
+
+[21:13:05] PATIENT (bot):
+    Oh, um, yeah! I'm Priya Sharma, and I'm actually calling because I'm looking for a new doctor and I wanted to ask about insurance before we get started. Do you guys accept AETNA?
+
+[21:13:41] AGENT (clinic):
+    Your patient profile is set up. And your date of birth is 07/04/2000 for demo purposes. Do accept most insurance plans, including AETA. How can I help you today? Are you interested in booking an appointment? Or do you have other questions?
+
+[21:13:42] PATIENT (bot):
+    Oh great, thanks! Yeah, so just to confirm—you do accept AETNA, that's awesome. Um, I also need to check on BLUE CROSS BLUE SHIELD. Do you take that one too?
+
+[21:14:05] AGENT (clinic):
+    Yes. We accept most major insurance plans, including Blue Cross Blue Shield. Would you like to schedule an appointment, or do you have more questions about our service
+
+[21:14:06] PATIENT (bot):
+    Perfect, that's great to hear! Um, one more thing—do you also accept CIGNA?
+
+[21:14:25] AGENT (clinic):
+    Yes. We accept Cigna as well. Would you like to book an appointment? Or is there anything else I can help with?
+
+[21:14:26] PATIENT (bot):
+    That's wonderful, thank you so much! I really appreciate you confirming all three of those for me. I think that covers what I needed, so I'm all set for now. Thanks again, and have a great day!

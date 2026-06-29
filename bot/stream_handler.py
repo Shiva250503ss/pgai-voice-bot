@@ -37,12 +37,18 @@ FRAME_SECONDS = 0.02
 
 # How long to wait for the clinic agent to speak before the patient opens.
 # Long enough to clear IVR connection delay without making the call feel dead.
-OPENING_SILENCE_TIMEOUT = 8.0
+OPENING_SILENCE_TIMEOUT = 20.0
 
 # Minimum time the patient must have been speaking before the clinic agent
 # can trigger a barge-in. Prevents the agent's first word from cutting off
 # the patient mid-sentence.
-BARGE_IN_MIN_SPEAK_SECONDS = 3.0
+BARGE_IN_MIN_SPEAK_SECONDS = 2.0
+
+# Patient-initiated barge-in: how many words the clinic agent must have spoken
+# in its current utterance before an impatient patient cuts in. Only used when a
+# scenario opts in via scenario["barge_in"] (e.g. the interruption edge case);
+# all other scenarios leave patient barge-in disabled and are unaffected.
+INTERRUPT_MIN_AGENT_WORDS = 6
 
 
 @dataclass
@@ -76,6 +82,14 @@ class StreamHandler:
         self._turn_lock = asyncio.Lock()
         self._current_turn_task: asyncio.Task | None = None
         self._opening_task: asyncio.Task | None = None
+
+        # Patient-initiated barge-in is opt-in per scenario so it cannot affect
+        # any other call. When enabled, the patient cuts the agent off mid-turn
+        # instead of waiting for the agent to finish speaking.
+        self._interrupt_mode = bool(self.scenario.get("barge_in"))
+        # True once the patient has already barged in over the agent's current
+        # utterance, so we don't reply twice for the same agent turn.
+        self._interrupted_current = False
 
     # ----- main receive loop ---------------------------------------------
     async def run(self) -> None:
@@ -127,11 +141,37 @@ class StreamHandler:
             print("🤖 Agent silent; patient opening the conversation.")
             await self._take_turn(agent_text="")
 
-    async def _on_interim(self, _text: str) -> None:
-        # Only allow barge-in after the patient has been speaking long enough.
-        # This prevents the clinic agent's first word from cutting off the patient.
-        if self._speaking and (time.time() - self._speaking_since) >= BARGE_IN_MIN_SPEAK_SECONDS:
-            await self._barge_in()
+    async def _on_interim(self, text: str) -> None:
+        # Agent interrupts patient (all scenarios): if the agent starts talking
+        # while the patient is mid-sentence, stop the patient -- but only after
+        # the patient has been speaking long enough that the agent's first word
+        # doesn't cut them off.
+        if self._speaking:
+            if (time.time() - self._speaking_since) >= BARGE_IN_MIN_SPEAK_SECONDS:
+                await self._barge_in()
+            return
+
+        # Patient interrupts agent (opt-in scenarios only): an impatient patient
+        # cuts in once the agent has said enough words, instead of waiting for
+        # the agent to finish. Gated on self._interrupt_mode so no other call is
+        # affected.
+        await self._maybe_patient_interrupt(text)
+
+    async def _maybe_patient_interrupt(self, text: str) -> None:
+        if not self._interrupt_mode or self._interrupted_current:
+            return
+        # Don't interrupt before the call is underway, during the legal
+        # disclaimer, or while a patient turn is already in flight.
+        if not self._conversation_started or self._is_disclaimer(text):
+            return
+        if self._current_turn_task and not self._current_turn_task.done():
+            return
+        if len((text or "").split()) < INTERRUPT_MIN_AGENT_WORDS:
+            return
+        self._interrupted_current = True
+        print(f"🗣️  Patient barging in over agent: {text}")
+        self.session.recorder.add_turn("agent", text)
+        await self._take_turn(agent_text=text)
 
     # Phrases that indicate a system/legal disclaimer, not a conversational turn.
     _DISCLAIMER_PHRASES = (
@@ -151,10 +191,21 @@ class StreamHandler:
         if self._is_disclaimer(text):
             print(f"🔇 Disclaimer (no reply): {text}")
             self.session.recorder.add_turn("agent", text)
+            # Clinic is live — cancel self-open timer, but don't reply yet.
+            self._conversation_started = True
+            if self._opening_task and not self._opening_task.done():
+                self._opening_task.cancel()
             return
         self._conversation_started = True
         if self._opening_task and not self._opening_task.done():
             self._opening_task.cancel()
+        # If the patient already barged in over this agent utterance, the patient
+        # has effectively replied already. Note that the agent's turn finished
+        # and reset for the next one instead of generating a second reply.
+        if self._interrupted_current:
+            print(f"🎤 Agent finished (already interrupted): {text}")
+            self._interrupted_current = False
+            return
         print(f"🎤 Agent said: {text}")
         self.session.recorder.add_turn("agent", text)
         await self._take_turn(agent_text=text)

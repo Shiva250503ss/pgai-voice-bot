@@ -7,8 +7,21 @@ no decoding required.
 Two callbacks are exposed to the stream handler:
   * on_interim(text): an interim (non-final) transcript arrived. Used to detect
     that the agent has started talking again (barge-in).
-  * on_utterance(text): the agent finished an utterance (end of turn). This is
-    the cue to generate the patient's reply.
+  * on_utterance(text): the agent finished a complete utterance. This is the
+    cue to generate the patient's reply.
+
+Turn-boundary detection strategy
+---------------------------------
+We wait until Deepgram fires UtteranceEnd — meaning the agent's audio has been
+*completely silent* for UTTERANCE_END_SILENCE_MS milliseconds — before
+triggering the patient's reply. This avoids any mid-sentence interruptions:
+no matter how many natural pauses the agent takes within a sentence, we
+never respond until their voice is gone for the configured silence window.
+
+speech_final events are used only to accumulate transcript text; they never
+trigger a flush on their own. Interim results cancel any pending flush so that
+even a race between speech_final and the agent resuming speech is handled
+correctly.
 """
 
 from __future__ import annotations
@@ -27,9 +40,10 @@ from deepgram import (
 InterimCb = Callable[[str], Awaitable[None]]
 UtteranceCb = Callable[[str], Awaitable[None]]
 
-# After a speech_final, wait this long before acting — gives the agent time
-# to continue speaking through natural mid-sentence pauses.
-FLUSH_DEBOUNCE_SECONDS = 0.50
+# How long the agent must be silent (ms) before we treat their turn as done.
+# Deepgram measures this from the last detected word, so it's a true voice-gap
+# check — not a wall-clock timer.
+UTTERANCE_END_SILENCE_MS = 1500
 
 
 class DeepgramSTT:
@@ -40,7 +54,6 @@ class DeepgramSTT:
         api_key: str | None = None,
     ):
         api_key = api_key or os.environ.get("DEEPGRAM_API_KEY")
-        # keepalive avoids Deepgram closing the socket during silent stretches.
         config = DeepgramClientOptions(options={"keepalive": "true"})
         self._client = DeepgramClient(api_key, config)
         self._conn = None
@@ -48,8 +61,9 @@ class DeepgramSTT:
         self._on_interim = on_interim
         self._on_utterance = on_utterance
 
-        # Buffer of finalized fragments not yet flushed as a full utterance.
+        # Accumulates final transcript fragments within one utterance.
         self._final_parts: list[str] = []
+        # Task used to defer the flush until we're sure no new audio is coming.
         self._flush_task: asyncio.Task | None = None
 
     async def start(self) -> None:
@@ -68,10 +82,13 @@ class DeepgramSTT:
             interim_results=True,
             smart_format=True,
             punctuate=True,
-            # endpointing: ms of silence before a result is marked speech_final.
-            endpointing=400,
-            # utterance_end fires after this much silence -> hard end-of-turn.
-            utterance_end_ms=1000,
+            # endpointing: ms of silence before Deepgram marks a result as
+            # speech_final. We only use speech_final to accumulate text, not to
+            # trigger a reply, so a moderate value is fine.
+            endpointing=500,
+            # utterance_end_ms: ms of silence (after the last word) before
+            # Deepgram fires UtteranceEnd. THIS is what triggers our reply.
+            utterance_end_ms=UTTERANCE_END_SILENCE_MS,
             vad_events=True,
         )
 
@@ -88,11 +105,12 @@ class DeepgramSTT:
         if self._conn is not None:
             try:
                 await self._conn.finish()
-            except Exception:  # noqa: BLE001 - shutdown best-effort
+            except Exception:
                 pass
             self._conn = None
 
     # ----- Deepgram event handlers ---------------------------------------
+
     async def _handle_transcript(self, _client, result, **_kwargs) -> None:
         try:
             alt = result.channel.alternatives[0]
@@ -103,38 +121,27 @@ class DeepgramSTT:
             return
 
         if result.is_final:
+            # Accumulate text. We do NOT flush here — we wait for UtteranceEnd.
             self._final_parts.append(text)
-            # speech_final: Deepgram is confident the speaker paused/finished.
-            if getattr(result, "speech_final", False):
-                await self._flush()
         else:
-            # Interim words -> the agent is currently speaking (barge-in signal).
+            # Interim result: agent is still actively speaking.
+            # Cancel any pending flush so we never respond mid-sentence.
+            if self._flush_task and not self._flush_task.done():
+                self._flush_task.cancel()
+                self._flush_task = None
             await self._on_interim(text)
 
     async def _handle_utterance_end(self, _client, *_args, **_kwargs) -> None:
-        # The Deepgram SDK delivers the UtteranceEnd payload as a keyword arg
-        # (named `utterance_end`, NOT `result`), so we must not declare a
-        # required positional `_result` -- doing so raised "missing 1 required
-        # positional argument: '_result'". We accept *_args/**_kwargs and ignore
-        # the payload, since all we need to do is flush the buffered finals when
-        # the silence threshold (utterance_end_ms) is crossed.
-        await self._flush()
+        # Agent has been silent for UTTERANCE_END_SILENCE_MS — their turn is done.
+        # Flush immediately; Deepgram already waited the silence window for us.
+        if self._flush_task and not self._flush_task.done():
+            self._flush_task.cancel()
+        self._flush_task = asyncio.create_task(self._do_flush())
 
     async def _handle_error(self, _client, error, **_kwargs) -> None:
         print(f"⚠️  Deepgram error: {error}")
 
-    async def _flush(self) -> None:
-        # Debounce: cancel any in-flight flush and restart the timer so that
-        # mid-sentence pauses don't trigger a premature patient response.
-        if self._flush_task and not self._flush_task.done():
-            self._flush_task.cancel()
-        self._flush_task = asyncio.create_task(self._deferred_flush())
-
-    async def _deferred_flush(self) -> None:
-        try:
-            await asyncio.sleep(FLUSH_DEBOUNCE_SECONDS)
-        except asyncio.CancelledError:
-            return
+    async def _do_flush(self) -> None:
         if not self._final_parts:
             return
         utterance = " ".join(self._final_parts).strip()

@@ -16,3 +16,6 @@ env/
 .vscode/
 *.log
 
+# Private / local-only
+SPEAKER_NOTES.md
+

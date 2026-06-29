@@ -1,0 +1,95 @@
+======================================================================
+CALL TRANSCRIPT - Scenario 10: Unclear / mumbled multi-part request
+======================================================================
+Started:  2026-06-28 21:44:54
+Ended:    2026-06-28 21:50:35
+Duration: 341.0s
+Turns:    29
+======================================================================
+
+[21:45:05] AGENT (clinic):
+    This call may be recorded for quality and training purposes.
+
+[21:45:17] AGENT (clinic):
+    Thank you for calling PivotPoint Orthopaedics. Would you like to create a demo patient profile I just need your first and last name.
+
+[21:45:18] PATIENT (bot):
+    Oh um yeah hi sorry, so I'm Emma Wright and um I actually need to refill my prescription and also book an appointment for like next week and oh um can you tell me how to get to your office because I always get completely lost, sorry I'm just really busy today.
+
+[21:45:51] AGENT (clinic):
+    No problem, Emma. I'll get your demo patient profile set up first, then help with your prescription refill and appointment. I could also give you the full address for our office. One moment while I create your profile.
+
+[21:45:52] PATIENT (bot):
+    Oh yeah okay great, um thanks so much, yeah just to speed things up my date of birth is January 17, 1984 and my callback number is (833) 725-2475 if you need it!
+
+[21:46:00] AGENT (clinic):
+    No problem, Anna. I can help with your refill and booking an appointment. Which medication do you need refilled today?
+
+[21:46:01] PATIENT (bot):
+    Um it's actually Emma, not Anna, but yeah so I need to refill my pain medication — I think it's the one my doctor prescribed after my last visit, um I'm not totally sure of the name off the top of my head but it should be in my file?
+
+[21:46:32] AGENT (clinic):
+    Thanks for clarifying your name, Emma. I don't see any medications listed in your file right now. Could you tell me the name of the pain medication or describe it? Even a partial name or what the pill looks like can help.
+
+[21:46:34] PATIENT (bot):
+    Oh gosh um, yeah so it's like a white pill, maybe oval shaped? And um I think it starts with an 'i' or maybe an 'a'? I'm sorry I'm drawing a total blank right now — could you maybe look it up by like my prescription history or something, or would I need to call my doctor's office to get the exact name?
+
+[21:47:02] AGENT (clinic):
+    I don't have access to your full prescription history, so I'll need the Medicare
+
+[21:47:04] PATIENT (bot):
+    Oh um okay yeah, so I don't have my Medicare card on me right this second but um, can't you just look it up by my date of birth or like my callback number or something? I'm January 17, 1984 and (833) 725-2475, um but also I still really need to get that appointment booked for next week and you were gonna give me directions to your office too, right?
+
+[21:47:16] AGENT (clinic):
+    name, name or if you have the bottle nearby, that would help. If not, you may need to contact your doctor's office directly for the exact name. Would you like to try checking for the bottle, or should we move on to booking your appointment?
+
+[21:47:19] PATIENT (bot):
+    Um yeah okay, let me just like quickly look — oh gosh I'm not seeing it right now, it's probably in the bathroom cabinet somewhere, um but yeah let's just move forward and book that appointment for next week while we're on the phone, and then can you still give me those directions to your office?
+
+[21:47:57] AGENT (clinic):
+    Let's get your appointment set up for next week. Is this visit for a general checkup, a follow-up about your pain, or something else? This will help me book the right type of appointment for you. And I can give you the office address, but I can't provide detailed directions. Would you like the full address now?
+
+[21:47:58] PATIENT (bot):
+    Um yeah so it's definitely a follow-up about the pain, like I need to see someone about that, and um yes please give me the address now before I forget to ask again — I'll need to like put it in my GPS or whatever!
+
+[21:48:32] AGENT (clinic):
+    You're scheduled for a follow-up about your pain. The office is Pivot Point Orthopedics, 123 Main Street, Suite 400, Seattle. Do you have a preferred provider you'd like to see? Or should I look for the first available appointment next week?
+
+[21:48:33] PATIENT (bot):
+    Oh um yeah that's great, thanks so much, um just book me with whoever has the first opening next week, I'm pretty flexible with timing honestly, and um so that's 123 Main Street Suite 400 Seattle — got it, I got it!
+
+[21:49:04] AGENT (clinic):
+    It looks like you already have a follow-up appointment of this type booked. I can help you reschedule or cancel it. Or I can transfer you to a team member for more help. What would you like to do?
+
+[21:49:05] PATIENT (bot):
+    Oh um wait, I already have one booked? Um okay so like can you just reschedule that one to like earlier in the week maybe, like Monday or Tuesday if that's available, that would be way better for me actually?
+
+[21:49:29] AGENT (clinic):
+    I can't reschedule appointments directly, but I can connect you with a team member who can help move your appointment to an earlier day. Would you like me to transfer you now?
+
+[21:49:31] PATIENT (bot):
+    Um yeah okay sure, transfer me, that's fine — but um wait before you do, did we like totally figure out the prescription refill thing because I still kinda need that handled too, right?
+
+[21:49:50] AGENT (clinic):
+    I wasn't able to process your
+
+[21:49:51] PATIENT (bot):
+    Um yeah I know, I know you couldn't find it in the system, but like um can you maybe just make a note for the team member I'm about to talk to that I need the refill too, so like they can help me track down which medication it is and get that going? That way I'm not like repeating myself a million times!
+
+[21:49:55] AGENT (clinic):
+    prescription refill since I need the exact medication name. If you find the bottle or remember the name, let the team member
+
+[21:49:57] PATIENT (bot):
+    Yeah okay um, I'll definitely look for it and tell them, thanks — so you're transferring me now to someone who can reschedule my appointment earlier and help with the refill, right?
+
+[21:50:15] AGENT (clinic):
+    Connecting you to a representative. Please wait.
+
+[21:50:15] PATIENT (bot):
+    Okay, thanks so much, um I appreciate it!
+
+[21:50:19] AGENT (clinic):
+    Hello. You've reached the Pretty Good AI test line. Goodbye.
+
+[21:50:20] PATIENT (bot):
+    Um wait, hello? Hey, is someone there? Um okay this is weird, I think I got disconnected or something — hello?
