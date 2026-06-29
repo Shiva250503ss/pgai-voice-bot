@@ -13,6 +13,7 @@ Two callbacks are exposed to the stream handler:
 
 from __future__ import annotations
 
+import asyncio
 import os
 from typing import Awaitable, Callable
 
@@ -25,6 +26,10 @@ from deepgram import (
 
 InterimCb = Callable[[str], Awaitable[None]]
 UtteranceCb = Callable[[str], Awaitable[None]]
+
+# After a speech_final, wait this long before acting — gives the agent time
+# to continue speaking through natural mid-sentence pauses.
+FLUSH_DEBOUNCE_SECONDS = 0.50
 
 
 class DeepgramSTT:
@@ -45,6 +50,7 @@ class DeepgramSTT:
 
         # Buffer of finalized fragments not yet flushed as a full utterance.
         self._final_parts: list[str] = []
+        self._flush_task: asyncio.Task | None = None
 
     async def start(self) -> None:
         self._conn = self._client.listen.asyncwebsocket.v("1")
@@ -63,7 +69,7 @@ class DeepgramSTT:
             smart_format=True,
             punctuate=True,
             # endpointing: ms of silence before a result is marked speech_final.
-            endpointing=300,
+            endpointing=400,
             # utterance_end fires after this much silence -> hard end-of-turn.
             utterance_end_ms=1000,
             vad_events=True,
@@ -77,6 +83,8 @@ class DeepgramSTT:
             await self._conn.send(mulaw_audio)
 
     async def finish(self) -> None:
+        if self._flush_task and not self._flush_task.done():
+            self._flush_task.cancel()
         if self._conn is not None:
             try:
                 await self._conn.finish()
@@ -116,6 +124,17 @@ class DeepgramSTT:
         print(f"⚠️  Deepgram error: {error}")
 
     async def _flush(self) -> None:
+        # Debounce: cancel any in-flight flush and restart the timer so that
+        # mid-sentence pauses don't trigger a premature patient response.
+        if self._flush_task and not self._flush_task.done():
+            self._flush_task.cancel()
+        self._flush_task = asyncio.create_task(self._deferred_flush())
+
+    async def _deferred_flush(self) -> None:
+        try:
+            await asyncio.sleep(FLUSH_DEBOUNCE_SECONDS)
+        except asyncio.CancelledError:
+            return
         if not self._final_parts:
             return
         utterance = " ".join(self._final_parts).strip()

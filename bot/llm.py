@@ -12,7 +12,7 @@ import os
 from anthropic import AsyncAnthropic
 
 # Keep replies short: this is a live phone call, not a chat window.
-MODEL = "claude-sonnet-4-6"
+MODEL = "claude-haiku-4-5-20251001"
 MAX_TOKENS = 160
 
 PHONE_STYLE_RULES = (
@@ -81,5 +81,10 @@ class PatientLLM:
         if not text:
             return False
         lowered = text.lower()
-        farewells = ("bye", "goodbye", "good bye", "take care", "have a good", "have a great")
-        return any(f in lowered for f in farewells)
+        farewells = ("bye", "goodbye", "good bye", "have a good", "have a great")
+        if any(f in lowered for f in farewells):
+            return True
+        # "take care" is a farewell only when not followed by "of" (e.g. "take care of that")
+        if "take care" in lowered and "take care of" not in lowered:
+            return True
+        return False

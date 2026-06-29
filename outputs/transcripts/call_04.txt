@@ -1,0 +1,86 @@
+======================================================================
+CALL TRANSCRIPT - Scenario 4: Medication refill request
+======================================================================
+Started:  2026-06-28 14:37:46
+Ended:    2026-06-28 14:40:30
+Duration: 164.0s
+Turns:    26
+======================================================================
+
+[14:37:59] AGENT (clinic):
+    This call may be recorded for quality and training purposes.
+
+[14:38:01] PATIENT (bot):
+    Uh, yeah, that's fine with me. I'm calling about a refill on my medication, if you can help me with that.
+
+[14:38:03] AGENT (clinic):
+    Thank you for calling PivotPoint Orthopaedic.
+
+[14:38:04] PATIENT (bot):
+    Oh, um, okay. Yeah, I'm calling to get a refill on my Lisinopril — it's for my blood pressure. I'm just about out and need to get some more filled.
+
+[14:38:22] AGENT (clinic):
+    Would you like to create a demo patient profile so I can help with your refill request? I see your first and last name.
+
+[14:38:23] PATIENT (bot):
+    Well, uh, yes, that would be helpful. My name is Tom Reynolds — that's T-O-M Reynolds, R-E-Y-N-O-L-D-S.
+
+[14:38:43] AGENT (clinic):
+    Your patient profile is set up, and your date of birth is 07/04/2000 for demo purposes.
+
+[14:38:44] PATIENT (bot):
+    No, uh, that's not right. My date of birth is December 3rd, 1958 — let me see, that's 12-03-1958. I'm 67 years old.
+
+[14:38:45] AGENT (clinic):
+    Can I help you today?
+
+[14:38:46] PATIENT (bot):
+    Yes, thank you. I need a refill on my Lisinopril for high blood pressure. It was last filled about three months ago, and I'm almost out now.
+
+[14:38:52] AGENT (clinic):
+    Which medication do you need refilled today?
+
+[14:38:53] PATIENT (bot):
+    Uh, it's Lisinopril — that's for my high blood pressure. Like I said, it's been about three months since I had it filled.
+
+[14:39:01] AGENT (clinic):
+    Just to confirm, is it lisinopril you need refilled?
+
+[14:39:02] PATIENT (bot):
+    Yeah, that's right — Lisinopril. That's the one I need refilled.
+
+[14:39:14] AGENT (clinic):
+    How many days of lisinopril do you have left? If you are already out, just let me know.
+
+[14:39:15] PATIENT (bot):
+    Well, let me see, uh, I've got maybe just a few days left, so I'm running pretty low. I'd say I'm almost out at this point.
+
+[14:39:27] AGENT (clinic):
+    How many days of lisinopril do you have left, or are you already out?
+
+[14:39:28] PATIENT (bot):
+    Uh, yeah, I'd say I'm pretty much out now — maybe just a couple of days left if that. I need to get this filled soon.
+
+[14:39:49] AGENT (clinic):
+    I understand. I'll note that you have about two days left. Can I confirm your callback number as (833) 725-2475 for follow-up?
+
+[14:39:50] PATIENT (bot):
+    Let me see, uh, yes that sounds right — (833) 725-2475, yeah, that's my number.
+
+[14:40:06] AGENT (clinic):
+    I have your callback number as (833) 725-2475 Is that correct?
+
+[14:40:07] PATIENT (bot):
+    Yes, that's correct. That's the right number to reach me at.
+
+[14:40:15] AGENT (clinic):
+    Are you still there?
+
+[14:40:16] PATIENT (bot):
+    Yeah, I'm here. Just waiting to hear, uh, when my refill will be ready for pickup.
+
+[14:40:27] AGENT (clinic):
+    I'm going to end the call now. Goodbye.
+
+[14:40:28] PATIENT (bot):
+    Wait, uh, before you go — do you know when the medication will be ready? I need to know when to pick it up at the CVS on Main Street in Nashville.

@@ -1,0 +1,62 @@
+======================================================================
+CALL TRANSCRIPT - Scenario 3: Cancel appointment
+======================================================================
+Started:  2026-06-28 09:59:50
+Ended:    2026-06-28 10:01:57
+Duration: 127.4s
+Turns:    18
+======================================================================
+
+[10:00:03] AGENT (clinic):
+    This call may be recorded for quality and training purposes.
+
+[10:00:05] PATIENT (bot):
+    Hi, yeah, um, I'm calling to cancel an appointment I have coming up.
+
+[10:00:07] AGENT (clinic):
+    Thank you for calling PivotPoint Orthopedics.
+
+[10:00:09] PATIENT (bot):
+    Hi, yeah, I'd like to cancel an upcoming appointment — my name is Maria Gonzalez.
+
+[10:00:21] AGENT (clinic):
+    Hi, Maria. Before I can help with your appointment, would you like to create a demo patient profile?
+
+[10:00:23] PATIENT (bot):
+    Um, no thanks, I just need to cancel my appointment.
+
+[10:00:24] AGENT (clinic):
+    I just need your first and last name to get started.
+
+[10:00:25] PATIENT (bot):
+    Sure, it's Maria Gonzalez.
+
+[10:00:44] AGENT (clinic):
+    Your patient profile is set up, and your date of birth is 07/04/2000. How can I help you today?
+
+[10:00:45] PATIENT (bot):
+    Um, that's not my date of birth, but anyway — I just need to cancel my upcoming appointment, please.
+
+[10:01:03] AGENT (clinic):
+    You have an appointment scheduled with a Bricker on Friday, July 10. Is this the appointment you want to cancel?
+
+[10:01:05] PATIENT (bot):
+    Yeah, that sounds right — I'd like to go ahead and cancel that one.
+
+[10:01:19] AGENT (clinic):
+    Can you share the reason for canceling your appointment?
+
+[10:01:21] PATIENT (bot):
+    Um, my situation just changed and I won't be able to make it. I just need to cancel for now.
+
+[10:01:39] AGENT (clinic):
+    You'd like to cancel your appointment with Abricker on Friday, July 10. Is that correct?
+
+[10:01:41] PATIENT (bot):
+    Yeah, that's correct.
+
+[10:01:53] AGENT (clinic):
+    Your appointment on July 10 with doctor Bricker has been canceled. Is there anything else I can help you with today?
+
+[10:01:54] PATIENT (bot):
+    No, that's all — thanks so much, bye!

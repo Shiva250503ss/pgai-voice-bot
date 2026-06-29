@@ -1,0 +1,80 @@
+======================================================================
+CALL TRANSCRIPT - Scenario 5: Weekend appointment test (edge case)
+======================================================================
+Started:  2026-06-28 16:11:52
+Ended:    2026-06-28 16:15:18
+Duration: 205.7s
+Turns:    24
+======================================================================
+
+[16:12:04] AGENT (clinic):
+    This call may be recorded for quality and training purposes.
+
+[16:12:08] PATIENT (bot):
+    Hi, um, yes, I'm calling to schedule an appointment? I've been meaning to do this for a while and, yeah, I really need to get something looked at.
+
+[16:12:10] AGENT (clinic):
+    Thank you for calling Pivot Point Orthopedics. Would you like to create a demo?
+
+[16:12:12] PATIENT (bot):
+    Oh, um, no, I'm not looking for a demo or anything like that. I actually need to schedule an appointment with the clinic, um, for myself. Is this the right place to do that?
+
+[16:12:33] AGENT (clinic):
+    Yes. You're in the right place to schedule an appointment. To get started, I'll need to create a demo profile for you. May I have your first and last name?
+
+[16:12:35] PATIENT (bot):
+    Oh okay, sure. My name is Linda Park, um, L-I-N-D-A P-A-R-K. And yeah, I really need to get in as soon as possible, ideally on a Saturday morning if you have anything available?
+
+[16:12:58] AGENT (clinic):
+    Your patient profile is set up, and your date of birth is 07/04/2000 for demo purposes. How can I help you today?
+
+[16:12:59] PATIENT (bot):
+    Um, actually, I think there's a mistake there — my date of birth is July 22nd, 1980, not 2000. But anyway, like I was saying, I'm really hoping to schedule an appointment for Saturday at 10 AM if you have that available? That's really the only time that works with my work schedule during the week.
+
+[16:13:34] AGENT (clinic):
+    Thanks for clarifying your date of birth, Linda. Before I check Saturday availability, can you tell me the main reason for your visit? For example, is this for a new patient consultation, a follow-up?
+
+[16:13:35] PATIENT (bot):
+    Yeah, um, it's a new patient thing — I've got some issues I need to get checked out, nothing too serious I think, but it's been bothering me. So, um, do you have Saturday at 10 AM open, or what does that look like availability-wise?
+
+[16:13:37] AGENT (clinic):
+    A routine office visit, or something urgent?
+
+[16:13:38] PATIENT (bot):
+    Oh, it's just routine, nothing urgent or emergency-type stuff. But um, yeah, so about that Saturday 10 AM slot — can you check if that's available for me?
+
+[16:14:14] AGENT (clinic):
+    It looks like you already have a routine office visit appointment booked. I can't schedule another of the same type, but I can help you reschedule your existing appointment. Or connect you to live support if you need something different. Would you like to reschedule your current appointment to Saturday at 10AM if it's available? Or do you need help with something else?
+
+[16:14:15] PATIENT (bot):
+    Oh wait, um, I'm not sure about an existing appointment — I don't think I have one booked already. But yeah, if you can reschedule whatever that is to Saturday at 10 AM, that would be perfect for me, honestly. That's really the time that works best.
+
+[16:14:40] AGENT (clinic):
+    I'm unable to reschedule your appointment directly, but I can connect you a live support agent who can help with this right away.
+
+[16:14:41] PATIENT (bot):
+    Um, okay, yeah, that sounds good. Can you just, um, make sure to let them know I'm really hoping for Saturday at 10 AM? That's the only time that really works with my work schedule, so, yeah, please connect me.
+
+[16:14:45] AGENT (clinic):
+    You like me to transfer you now?
+
+[16:14:49] PATIENT (bot):
+    Yes, um, please go ahead and transfer me. And just to confirm, my callback number is (833) 725-2475 if they need to reach me, okay?
+
+[16:14:52] AGENT (clinic):
+    It looks like you want
+
+[16:14:53] PATIENT (bot):
+    Yeah, um, sorry, did you get cut off there? Are you transferring me now to the live agent?
+
+[16:14:59] AGENT (clinic):
+    Connecting you to a representative. Please wait.
+
+[16:15:00] PATIENT (bot):
+    Okay, um, thanks. I'll hold.
+
+[16:15:04] AGENT (clinic):
+    Hello. You've reached the Pretty Good AI test line. Goodbye.
+
+[16:15:05] PATIENT (bot):
+    Wait, um, hello? Is someone there? I was just transferred to schedule an appointment — can you help me with that?

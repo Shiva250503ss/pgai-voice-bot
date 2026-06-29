@@ -31,7 +31,7 @@ TRANSCRIPTS_DIR = ROOT / "outputs" / "transcripts"
 RECORDINGS_DIR = ROOT / "outputs" / "recordings"
 
 # Safety cap so a stuck call can't run forever.
-MAX_CALL_SECONDS = 240
+MAX_CALL_SECONDS = 360
 # How long to keep polling Twilio for the finalized recording after hang-up.
 RECORDING_POLL_ATTEMPTS = 10
 RECORDING_POLL_INTERVAL = 3.0

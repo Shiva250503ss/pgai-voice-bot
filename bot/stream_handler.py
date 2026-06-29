@@ -4,9 +4,13 @@ One Twilio call == one websocket connection == one StreamHandler. The handler:
   1. Receives Twilio Media Stream events (connected/start/media/stop).
   2. Forwards inbound mulaw audio (the clinic agent's voice) to Deepgram.
   3. On end-of-utterance, asks Claude (patient persona) for the next line.
-  4. Synthesizes that line with ElevenLabs and streams it back to Twilio.
+  4. Streams that line through ElevenLabs and plays it back to Twilio in
+     real-time as chunks arrive, so audio starts ~300-500ms after the LLM
+     responds instead of waiting for the full synthesis.
   5. Handles barge-in: if the agent starts talking while the patient is
-     speaking, playback is stopped and Twilio's buffer is cleared.
+     speaking (and the patient has been speaking for at least
+     BARGE_IN_MIN_SPEAK_SECONDS), playback is stopped and Twilio's buffer
+     is cleared.
 
 main.py creates a CallSession, registers it on app.state, then places the call.
 The handler picks up that session when Twilio connects.
@@ -30,8 +34,15 @@ from .tts import PatientTTS
 # 20ms of mulaw 8kHz audio = 160 bytes. We stream back in these frames.
 FRAME_BYTES = 160
 FRAME_SECONDS = 0.02
-# If the agent hasn't said anything this long after connect, the patient opens.
-OPENING_SILENCE_TIMEOUT = 4.0
+
+# How long to wait for the clinic agent to speak before the patient opens.
+# Long enough to clear IVR connection delay without making the call feel dead.
+OPENING_SILENCE_TIMEOUT = 8.0
+
+# Minimum time the patient must have been speaking before the clinic agent
+# can trigger a barge-in. Prevents the agent's first word from cutting off
+# the patient mid-sentence.
+BARGE_IN_MIN_SPEAK_SECONDS = 3.0
 
 
 @dataclass
@@ -60,6 +71,7 @@ class StreamHandler:
         self._stream_sid: str | None = None
         self._conversation_started = False
         self._speaking = False
+        self._speaking_since: float = 0.0
         self._interrupt = False
         self._turn_lock = asyncio.Lock()
         self._current_turn_task: asyncio.Task | None = None
@@ -95,7 +107,6 @@ class StreamHandler:
         self.session.stream_sid = self._stream_sid
         self.session.call_sid = start.get("callSid", self.session.call_sid)
         print(f"📞 Stream started (streamSid={self._stream_sid}).")
-        # If the agent stays silent, the patient kicks off the conversation.
         self._opening_task = asyncio.create_task(self._maybe_open())
 
     async def _on_media(self, msg: dict) -> None:
@@ -107,7 +118,7 @@ class StreamHandler:
 
     # ----- conversation logic --------------------------------------------
     async def _maybe_open(self) -> None:
-        """Patient speaks first if the agent hasn't greeted in time."""
+        """Patient speaks first if the clinic agent hasn't greeted in time."""
         try:
             await asyncio.sleep(OPENING_SILENCE_TIMEOUT)
         except asyncio.CancelledError:
@@ -117,11 +128,30 @@ class StreamHandler:
             await self._take_turn(agent_text="")
 
     async def _on_interim(self, _text: str) -> None:
-        # Agent is talking. If the patient is mid-sentence, stop and listen.
-        if self._speaking:
+        # Only allow barge-in after the patient has been speaking long enough.
+        # This prevents the clinic agent's first word from cutting off the patient.
+        if self._speaking and (time.time() - self._speaking_since) >= BARGE_IN_MIN_SPEAK_SECONDS:
             await self._barge_in()
 
+    # Phrases that indicate a system/legal disclaimer, not a conversational turn.
+    _DISCLAIMER_PHRASES = (
+        "may be recorded",
+        "recorded for quality",
+        "recorded for training",
+        "quality and training",
+        "quality assurance",
+        "monitoring purposes",
+    )
+
+    def _is_disclaimer(self, text: str) -> bool:
+        lowered = text.lower()
+        return any(phrase in lowered for phrase in self._DISCLAIMER_PHRASES)
+
     async def _on_utterance(self, text: str) -> None:
+        if self._is_disclaimer(text):
+            print(f"🔇 Disclaimer (no reply): {text}")
+            self.session.recorder.add_turn("agent", text)
+            return
         self._conversation_started = True
         if self._opening_task and not self._opening_task.done():
             self._opening_task.cancel()
@@ -130,7 +160,7 @@ class StreamHandler:
         await self._take_turn(agent_text=text)
 
     async def _take_turn(self, agent_text: str) -> None:
-        # Cancel any in-flight turn (covers barge-in / overlapping utterances).
+        # Cancel any in-flight turn (barge-in / overlapping utterances).
         if self._current_turn_task and not self._current_turn_task.done():
             self._current_turn_task.cancel()
         self._conversation_started = True
@@ -146,11 +176,10 @@ class StreamHandler:
                 print(f"🤖 Patient responding: {reply}")
                 self.session.recorder.add_turn("patient", reply)
 
-                audio = await self.session.tts.synthesize(reply)
-                if audio:
-                    await self._speak(audio)
+                # Stream TTS: audio starts playing as first chunk arrives (~300ms)
+                # rather than waiting for the full synthesis to complete (~2s).
+                await self._speak_stream(self.session.tts.synthesize_stream(reply))
 
-                # End the call if the patient just said goodbye.
                 if self.session.llm.is_goodbye(reply):
                     print("👋 Patient said goodbye; ending call.")
                     await asyncio.sleep(0.5)
@@ -159,30 +188,67 @@ class StreamHandler:
             pass
 
     # ----- audio playback (patient -> Twilio) ----------------------------
-    async def _speak(self, mulaw_audio: bytes) -> None:
-        """Stream mulaw audio back to Twilio in 20ms frames, interruptible."""
+    async def _speak_stream(self, audio_stream) -> None:
+        """Play mulaw audio from an async generator, interruptible, frame-by-frame.
+
+        Chunks from ElevenLabs are buffered and emitted as 160-byte Twilio
+        media frames paced at real-time (18ms sleep per frame to keep Twilio's
+        buffer shallow for low barge-in latency).
+        """
         if not self._stream_sid:
+            # Drain the generator so the producer thread can exit cleanly.
+            async for _ in audio_stream:
+                pass
             return
+
         self._speaking = True
+        self._speaking_since = time.time()
         self._interrupt = False
-        self.session.recorder.add_patient_audio(mulaw_audio)
+        buf = bytearray()
+
         try:
-            for i in range(0, len(mulaw_audio), FRAME_BYTES):
+            async for chunk in audio_stream:
                 if self._interrupt:
                     break
-                frame = mulaw_audio[i : i + FRAME_BYTES]
-                await self.ws.send_text(
-                    json.dumps(
-                        {
-                            "event": "media",
-                            "streamSid": self._stream_sid,
-                            "media": {"payload": base64.b64encode(frame).decode("ascii")},
-                        }
+                self.session.recorder.add_patient_audio(chunk)
+                buf.extend(chunk)
+
+                # Emit all complete 160-byte frames from the buffer.
+                while len(buf) >= FRAME_BYTES:
+                    if self._interrupt:
+                        break
+                    frame = bytes(buf[:FRAME_BYTES])
+                    del buf[:FRAME_BYTES]
+                    try:
+                        await self.ws.send_text(
+                            json.dumps(
+                                {
+                                    "event": "media",
+                                    "streamSid": self._stream_sid,
+                                    "media": {"payload": base64.b64encode(frame).decode("ascii")},
+                                }
+                            )
+                        )
+                    except Exception:
+                        self._interrupt = True
+                        return
+                    await asyncio.sleep(FRAME_SECONDS * 0.9)
+
+            # Flush any remaining bytes as a zero-padded final frame.
+            if buf and not self._interrupt:
+                frame = bytes(buf) + b"\x7f" * (FRAME_BYTES - len(buf))
+                try:
+                    await self.ws.send_text(
+                        json.dumps(
+                            {
+                                "event": "media",
+                                "streamSid": self._stream_sid,
+                                "media": {"payload": base64.b64encode(frame).decode("ascii")},
+                            }
+                        )
                     )
-                )
-                # Pace slightly under real time so Twilio's buffer stays shallow,
-                # which keeps barge-in latency low.
-                await asyncio.sleep(FRAME_SECONDS * 0.9)
+                except Exception:
+                    self._interrupt = True
         finally:
             self._speaking = False
 
@@ -200,6 +266,7 @@ class StreamHandler:
 
     # ----- shutdown -------------------------------------------------------
     async def _shutdown(self) -> None:
+        self._interrupt = True
         if self._opening_task and not self._opening_task.done():
             self._opening_task.cancel()
         if self._current_turn_task and not self._current_turn_task.done():
